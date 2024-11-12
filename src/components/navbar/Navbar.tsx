@@ -8,7 +8,10 @@ export default function Navbar() {
       <Link href='/' className='text-blue-400 text-3xl  font-bold  p-2 rounded-3xl hover:bg-blue-100 hover:scale-'>
         천리안
       </Link>
-      <div className='absolute top-5 right-1 flex justify-center items-center gap-4 mr-[40px] hover:bg-blue-100 rounded-full'>
+      <div className='absolute top-5 right-1 flex justify-center items-center gap-4 mr-[40px]'>
+        <Link href='/login' className='text-blue-500 text-lg font-semibold hover:bg-blue-100 p-2 rounded-3xl'>
+          Login
+        </Link>
         <BackButton />
       </div>
     </nav>

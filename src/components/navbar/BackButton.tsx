@@ -9,7 +9,7 @@ export default function BackButton() {
     router.back();
   };
   return (
-    <button onClick={handleBack} className=' text-blue-400 p-1'>
+    <button onClick={handleBack} className=' text-blue-400 p-1  hover:bg-blue-100 rounded-full'>
       <IoMdArrowRoundBack size={38} />
     </button>
   );
