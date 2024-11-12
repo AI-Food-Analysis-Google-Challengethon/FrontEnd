@@ -56,7 +56,6 @@ export const Camera = () => {
       )}
 
       <canvas ref={canvasRef} className='hidden' />
-
       {photoData && (
         <div className={containerStyle}>
           <PhotoView photoData={photoData} onSave={savePhoto} onRetake={handleRetake} />

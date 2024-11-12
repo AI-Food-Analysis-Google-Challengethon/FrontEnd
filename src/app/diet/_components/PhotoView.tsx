@@ -18,7 +18,7 @@ export const PhotoView = ({ photoData, onSave, onRetake }: PhotoViewProps) => {
   return (
     <div className='flex flex-col items-center gap-4 w-full h-full'>
       <div className='w-full h-full bg-black rounded-lg overflow-hidden'>
-        <img src={photoData} alt='촬영된 사진' className='w-full h-full object-contain' />
+        <img src={photoData} alt='촬영된 사진' className='w-full h-full object-cover' />
       </div>
       <div className='flex items-center gap-2'>
         <button onClick={onSave} className='px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600'>
