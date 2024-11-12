@@ -3,6 +3,8 @@ import { CameraView } from './CameraView';
 import { PhotoView } from './PhotoView';
 import { useCamera } from '@/hooks/useCamera';
 
+const containerStyle = 'w-full max-w-[400px] md:max-w-[600px] lg:max-w-[800px] h-[400px] md:h-[500px] lg:h-[600px]';
+
 export const Camera = () => {
   const {
     stream,
@@ -43,17 +45,23 @@ export const Camera = () => {
       )}
 
       {stream && (
-        <CameraView
-          videoRef={videoRef}
-          isVideoVisible={videoVisible}
-          onTakePhoto={handleTakePhoto}
-          onStopCamera={stopCamera}
-        />
+        <div className={containerStyle}>
+          <CameraView
+            videoRef={videoRef}
+            isVideoVisible={videoVisible}
+            onTakePhoto={handleTakePhoto}
+            onStopCamera={stopCamera}
+          />
+        </div>
       )}
 
       <canvas ref={canvasRef} className='hidden' />
 
-      {photoData && <PhotoView photoData={photoData} onSave={savePhoto} onRetake={handleRetake} />}
+      {photoData && (
+        <div className={containerStyle}>
+          <PhotoView photoData={photoData} onSave={savePhoto} onRetake={handleRetake} />
+        </div>
+      )}
     </>
   );
 };

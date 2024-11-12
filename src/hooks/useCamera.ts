@@ -100,4 +100,3 @@ export const useCamera = (photoQuality: number = 1.0) => {
     setPhotoData
   };
 };
-

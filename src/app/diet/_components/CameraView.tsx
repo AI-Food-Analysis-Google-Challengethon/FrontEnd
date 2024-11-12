@@ -7,8 +7,8 @@ interface CameraViewProps {
 }
 
 export const CameraView = ({ videoRef, isVideoVisible, onTakePhoto, onStopCamera }: CameraViewProps) => (
-  <div className='flex flex-col items-center gap-4 w-full max-w-md'>
-    <div className='relative w-full bg-black rounded-lg overflow-hidden' style={{ aspectRatio: '16/9' }}>
+  <div className='flex flex-col items-center gap-4 w-full h-full'>
+    <div className='relative w-full h-full bg-black rounded-lg overflow-hidden'>
       <video
         ref={videoRef}
         autoPlay
