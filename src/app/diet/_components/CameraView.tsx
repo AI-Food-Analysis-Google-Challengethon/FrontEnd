@@ -13,6 +13,7 @@ export const CameraView = ({ videoRef, isVideoVisible, onTakePhoto, onStopCamera
         ref={videoRef}
         autoPlay
         playsInline
+        style={{ transform: 'scaleX(-1)' }}
         className={`w-full h-full object-cover ${isVideoVisible ? 'block' : 'hidden'}`}
       />
       {!isVideoVisible && (

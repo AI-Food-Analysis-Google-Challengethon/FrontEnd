@@ -27,7 +27,7 @@ export const useCamera = (photoQuality: number = 1.0) => {
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: { 
           width: { ideal: 1280 },
-          height: { ideal: 720 }
+          height: { ideal: 720 },
         }
       });
       
