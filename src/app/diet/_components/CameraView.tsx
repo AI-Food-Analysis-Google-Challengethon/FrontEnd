@@ -6,6 +6,10 @@ interface CameraViewProps {
   onStopCamera: () => void;
 }
 
+const isMobile = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+
 export const CameraView = ({ videoRef, isVideoVisible, onTakePhoto, onStopCamera }: CameraViewProps) => (
   <div className='flex flex-col items-center gap-4 w-full h-full'>
     <div className='relative w-full h-full bg-black rounded-lg overflow-hidden'>
@@ -13,7 +17,7 @@ export const CameraView = ({ videoRef, isVideoVisible, onTakePhoto, onStopCamera
         ref={videoRef}
         autoPlay
         playsInline
-        style={{ transform: 'scaleX(-1)' }}
+        style={isMobile() ? undefined : { transform: 'scaleX(-1)' }}
         className={`w-full h-full object-cover ${isVideoVisible ? 'block' : 'hidden'}`}
       />
       {!isVideoVisible && (
