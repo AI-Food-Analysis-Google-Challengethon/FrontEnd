@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import BackButton from './BackButton';
+import NavbarInLogin from './NavbarInLogin';
 
 export default function Navbar() {
   return (
@@ -11,9 +12,7 @@ export default function Navbar() {
         천리안
       </Link>
       <div className='absolute top-5 right-3 flex justify-center items-center gap-4'>
-        <Link href='/login' className='text-blue-500 text-lg font-semibold hover:bg-blue-100 p-2 rounded-3xl'>
-          Login
-        </Link>
+        <NavbarInLogin />
       </div>
     </nav>
   );
