@@ -7,6 +7,7 @@ export const useCamera = (photoQuality: number = 1.0) => {
   const [error, setError] = useState<string>('');
   const [photoData, setPhotoData] = useState<string | null>(null);
   const [videoVisible, setVideoVisible] = useState(false);
+  const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment');
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -19,6 +20,10 @@ export const useCamera = (photoQuality: number = 1.0) => {
     }
   }, [stream]);
 
+  const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  };
+
   const startCamera = async () => {
     try {
       setError('');
@@ -28,6 +33,7 @@ export const useCamera = (photoQuality: number = 1.0) => {
         video: { 
           width: { ideal: 1280 },
           height: { ideal: 720 },
+          ...(isMobile() && { facingMode: 'environment' })
         }
       });
       
@@ -35,6 +41,21 @@ export const useCamera = (photoQuality: number = 1.0) => {
     } catch (err) {
       console.error('카메라 접근 에러:', err);
       setError(err instanceof Error ? err.message : '카메라 접근 실패');
+      
+      if (isMobile()) {
+        try {
+          const mediaStream = await navigator.mediaDevices.getUserMedia({
+            video: { 
+              width: { ideal: 1280 },
+              height: { ideal: 720 }
+            }
+          });
+          setStream(mediaStream);
+        } catch (retryErr) {
+          console.error('카메라 재시도 실패:', retryErr);
+          setError(retryErr instanceof Error ? retryErr.message : '카메라 접근 실패');
+        }
+      }
     }
   };
 
