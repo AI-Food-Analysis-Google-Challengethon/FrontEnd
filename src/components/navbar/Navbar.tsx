@@ -11,7 +11,7 @@ export default function Navbar() {
         천리안
       </Link>
       <div className='absolute right-3 top-5 flex justify-center items-center gap-4 mr-[15px] lg:mr-[40px]'>
-        <Link href='/login' className='text-blue-500 text-lg font-semibold hover:bg-blue-100 p-2 rounded-3xl'>
+        <Link href='/login' className='text-blue-500 text-lg font-semibold hover:bg-blue-100 p-2 rounded-3xl '>
           Login
         </Link>
       </div>
