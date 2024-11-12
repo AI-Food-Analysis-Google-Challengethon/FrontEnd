@@ -12,9 +12,9 @@ export default function NavbarInLogin() {
   return (
     <div className='flex items-center'>
       {session ? (
-        <div className=''>
-          <span className='text-[15px] font-semibold mr-2'>{session.user?.name} 님</span>
+        <div className='flex flex-col items-centers justify-center lg:flex-row lg:gap-4'>
           <SignOutButton />
+          <span className='text-[15px] font-semibold mr-1 mt-[2px] lg:mt-[10px]'>{session.user?.name} 님</span>
         </div>
       ) : (
         <Link href='/login' className='font-bold bg-blue-500 p-2 text-white rounded-3xl hover:bg-blue-600 duration-200'>
