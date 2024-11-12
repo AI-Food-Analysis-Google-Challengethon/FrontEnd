@@ -1,6 +1,6 @@
 'use client';
 import { usePhotoStore } from '@/store/usePhotoStore';
-import axios from 'axios';
+import axios, { Axios, AxiosError } from 'axios';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -40,10 +40,12 @@ export default function PhotoDisplay() {
           };
 
           setAnalysisResult(dummyAnalysis);
-        } catch (err) {
-          setError('사진 분석 중 오류가 발생했습니다.');
-        } finally {
           setIsLoading(false);
+        } catch (err) {
+          if (axios.isAxiosError(err)) {
+            console.log(err.message);
+            setError('사진 분석 중 오류가 발생했습니다.');
+          }
         }
       };
 
