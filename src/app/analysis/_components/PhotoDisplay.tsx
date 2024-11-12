@@ -67,7 +67,9 @@ export default function PhotoDisplay() {
       <section className='flex flex-col justify-center items-center'>
         <h2 className='text-purple-500 font-semibold'>음식 사진</h2>
         {photoData ? (
-          <Image src={photoData} width={300} height={300} alt='diet image' className='object-cover rounded-lg' />
+          <div className='relative w-[400px] h-[300px] lg:w-[800px] lg:h-[500px]'>
+            <Image src={photoData} fill alt='diet image' className='object-cover rounded-lg' />
+          </div>
         ) : (
           <p>분석할 사진이 없습니다.</p>
         )}
