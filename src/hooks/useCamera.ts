@@ -7,7 +7,6 @@ export const useCamera = (photoQuality: number = 1.0) => {
   const [error, setError] = useState<string>('');
   const [photoData, setPhotoData] = useState<string | null>(null);
   const [videoVisible, setVideoVisible] = useState(false);
-  const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment');
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
