@@ -4,7 +4,7 @@ import { PhotoView } from './PhotoView';
 import { useCamera } from '@/hooks/useCamera';
 
 const containerStyle =
-  'w-full max-w-[90vmin] md:max-w-[70vmin] lg:max-w-[60vmin] h-[90vmin] md:h-[70vmin] lg:h-[60vmin]';
+  'w-full max-w-[95vmin] md:max-w-[80vmin] lg:max-w-[60vmin] h-[95vmin] md:h-[80vmin] lg:h-[60vmin]';
 
 export const Camera = () => {
   const {
