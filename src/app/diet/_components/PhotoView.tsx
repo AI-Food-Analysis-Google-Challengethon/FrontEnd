@@ -96,7 +96,7 @@ export const PhotoView = ({ photoData, onSave, onRetake }: PhotoViewProps) => {
 
   return (
     <div className='flex flex-col items-center gap-4 w-full h-full'>
-      <div className='w-full h-full bg-white rounded-lg overflow-hidden relative'>
+      <div className='w-full h-full bg-black rounded-lg overflow-hidden relative'>
         {isCropping ? (
           <div className='relative w-full h-full'>
             <Cropper
