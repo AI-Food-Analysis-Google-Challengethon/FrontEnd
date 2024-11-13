@@ -1,10 +1,20 @@
-import NextAuth, { NextAuthConfig } from "next-auth"
+import NextAuth, { NextAuthConfig, Session } from "next-auth"
 import { JWT } from 'next-auth/jwt'
 import GoogleProvider from "next-auth/providers/google"
 import axios from 'axios'
 
 interface Account {
   access_token?: string;
+}
+
+// JWT 타입 확장
+interface CustomJWT extends JWT {
+  accessToken?: string;
+}
+
+// Session 타입 확장
+interface CustomSession extends Session {
+  accessToken?: string;
 }
 
 export const authConfig: NextAuthConfig = {
@@ -30,20 +40,22 @@ export const authConfig: NextAuthConfig = {
           return true;
         } catch (error) {
           console.error('토큰 전송 실패:', error);
-          return true; // 또는 false
+          return true;
         }
       }
       return true;
     },
-    async jwt({ token, account }: { token: JWT; account: Account | null }) {
+    async jwt({ token, account }: { token: CustomJWT; account: Account | null }) {
       if (account?.access_token) {
-        token.accessToken = account.access_token
+        token.accessToken = account.access_token;
       }
-      return token
+      return token;
     },
-    async session({ session, token }: { session: any; token: JWT }) {
-      session.accessToken = token.accessToken
-      return session
+    async session({ session, token }: { session: CustomSession; token: CustomJWT }) {
+      if (token.accessToken) {
+        session.accessToken = token.accessToken;
+      }
+      return session;
     }
   }
 }
