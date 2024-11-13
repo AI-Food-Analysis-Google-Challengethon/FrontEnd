@@ -30,7 +30,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <SessionProvider>
           <Navbar />
-          <main className='pt-[80px]'>{children}</main>
+          <main className='pt-[70px]'>{children}</main>
         </SessionProvider>
       </body>
     </html>

@@ -7,7 +7,7 @@ import DailyMealChart from './_components/DailyMealChart';
 export default function Home() {
   return (
     <div className='w-full flex flex-col justify-center items-center mt-[40px]'>
-      <div className='flex flex-col justify-center items-center mb-12'>
+      <div className='flex flex-col justify-center items-center mb-4'>
         <h1 className='text-2xl font-semibold mb-2'>오늘의 식사 점수는?</h1>
         <GaugeChart value={75} />
       </div>
