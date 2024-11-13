@@ -12,7 +12,7 @@ const isMobile = () => {
 
 export const CameraView = ({ videoRef, isVideoVisible, onTakePhoto, onStopCamera }: CameraViewProps) => (
   <div className='flex flex-col items-center gap-4 w-full h-full'>
-    <div className='relative w-full h-full bg-white rounded-lg overflow-hidden' style={{ aspectRatio: '16/9' }}>
+    <div className='relative w-full h-full bg-white rounded-lg overflow-hidden' style={{ aspectRatio: '1/1' }}>
       <video
         ref={videoRef}
         autoPlay

@@ -30,8 +30,8 @@ export const useCamera = (photoQuality: number = 1.0) => {
       
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: { 
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
+          width: { ideal: 1080  },
+          height: { ideal: 1080  },
           ...(isMobile() && { facingMode: 'environment' })
         }
       });
@@ -45,8 +45,8 @@ export const useCamera = (photoQuality: number = 1.0) => {
         try {
           const mediaStream = await navigator.mediaDevices.getUserMedia({
             video: { 
-              width: { ideal: 1280 },
-              height: { ideal: 720 }
+              width: { ideal: 1080  },
+              height: { ideal: 1080  }
             }
           });
           setStream(mediaStream);
