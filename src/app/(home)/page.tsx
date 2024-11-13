@@ -1,7 +1,5 @@
-import CalorieBar from '@/components/chart/CalorieBar';
 import GaugeChart from '@/components/chart/GaugeChart';
-import Link from 'next/link';
-import { FaCameraRetro, FaRegMoon } from 'react-icons/fa';
+import { FaRegMoon } from 'react-icons/fa';
 import { IoPartlySunnyOutline } from 'react-icons/io5';
 import { MdOutlineWbSunny } from 'react-icons/md';
 import DailyMealChart from './_components/DailyMealChart';
