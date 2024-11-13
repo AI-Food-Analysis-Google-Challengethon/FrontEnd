@@ -4,7 +4,7 @@ import { CameraView } from './_components/CameraView';
 import { PhotoView } from './_components/PhotoView';
 import { useCamera } from '@/hooks/useCamera';
 
-const containerStyle = 'x-[450px] h-[450px] md:w-[550px] md:h-[550px]';
+const containerStyle = 'x-[450px] h-[450px] md:w-[490px] md:h-[490px]';
 
 export default function CameraPage() {
   const {

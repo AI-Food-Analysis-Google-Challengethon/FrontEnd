@@ -15,12 +15,12 @@ const CalorieBar = ({ current = 0, max = 2000 }) => {
 
   return (
     <div className='w-full'>
-      <div className='w-[180px] lg:w-[400px] flex justify-between mb-1 items-center'>
-        <span className='text-base font-semibold mr-[5px]'>{current}kcal</span>
+      <div className='flex justify-between mb-1 items-center'>
+        <span className='w-[100px] md:[400px] text-base font-semibold'>{current}kcal</span>
         <span className='text-sm text-gray-500'>/ {max}kcal</span>
       </div>
 
-      <div className='h-16 w-[180px] lg:w-[400px]'>
+      <div className='h-16'>
         <ResponsiveContainer width='100%' height='100%'>
           <BarChart data={data} layout='vertical' stackOffset='expand' barSize={16}>
             <XAxis type='number' hide />
@@ -33,6 +33,8 @@ const CalorieBar = ({ current = 0, max = 2000 }) => {
                 borderRadius: '8px',
                 boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
               }}
+              position={{ y: -30 }}
+              cursor={false}
             />
             <Bar
               dataKey='current'
