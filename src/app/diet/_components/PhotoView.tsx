@@ -97,7 +97,7 @@ export const PhotoView = ({ photoData, onSave, onRetake }: PhotoViewProps) => {
         <IoFastFoodOutline />
         촬영한 사진 <IoFastFoodOutline />
       </div>
-      <div className='w-full h-[400px] bg-black rounded-lg overflow-hidden relative lg:ml-[100px]'>
+      <div className='w-full h-[400px] lg:h-[500px] bg-black rounded-lg overflow-hidden relative'>
         {isCropping ? (
           <div className='relative w-[400px] h-[400px]'>
             <Cropper

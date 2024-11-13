@@ -4,7 +4,7 @@ import NavbarInLogin from './NavbarInLogin';
 
 export default function Navbar() {
   return (
-    <nav className='fixed bg-white top-0 left-0 z-50 w-full h-[70px] border-b-2 flex justify-center items-center shadow-sm'>
+    <nav className='relative bg-white w-full h-[70px] border-b-2 flex justify-center items-center shadow-sm'>
       <div className='absolute left-3 top-4'>
         <BackButton />
       </div>
