@@ -51,6 +51,7 @@ export default function PhotoDisplay() {
 
   return (
     <div className='flex flex-col justify-center items-center'>
+      {error && <div className='text-xl text-red-600'>알 수 없는 오류가 발생했습니다.</div>}
       <section className='flex flex-col justify-center items-center'>
         {photoData ? (
           <div
