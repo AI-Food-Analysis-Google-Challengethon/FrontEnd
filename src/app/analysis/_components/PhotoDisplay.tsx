@@ -12,6 +12,10 @@ interface AnalysisResultProps {
   foodName: string;
 }
 
+const isMobile = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+
 export default function PhotoDisplay() {
   const { photoData } = usePhotoStore();
   const [isMounted, setIsMounted] = useState(false);
@@ -67,7 +71,10 @@ export default function PhotoDisplay() {
       <section className='flex flex-col justify-center items-center'>
         <h2 className='text-purple-500 font-semibold'>음식 사진</h2>
         {photoData ? (
-          <div className='relative w-[400px] h-[300px] lg:w-[800px] lg:h-[500px]'>
+          <div
+            className='relative w-[400px] h-[300px] lg:w-[800px] lg:h-[500px]'
+            style={isMobile() ? undefined : { transform: 'scaleX(-1)' }}
+          >
             <Image src={photoData} fill alt='diet image' className='object-cover rounded-lg' />
           </div>
         ) : (
