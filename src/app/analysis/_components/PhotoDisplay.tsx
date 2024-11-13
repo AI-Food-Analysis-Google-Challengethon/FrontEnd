@@ -3,6 +3,7 @@ import { usePhotoStore } from '@/store/usePhotoStore';
 import axios from 'axios';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import NutritionChart from './NutritionChart';
 
 interface AnalysisResultProps {
   calories: number;
@@ -33,17 +34,8 @@ export default function PhotoDisplay() {
 
         try {
           // const res = await axios.post('/apiUrl', { imageUrl: photoData });    사진 백엔드로 보내기
-          const res = await axios.get('https://dummyjson.com/products/3');
-
-          const dummyAnalysis: AnalysisResultProps = {
-            calories: res.data.price, // price를 칼로리로 변환
-            protein: Math.floor(res.data.rating * 2), // rating을 단백질로 변환
-            carbs: Math.floor(res.data.stock / 2), // stock을 탄수화물로 변환
-            fat: Math.floor(res.data.discountPercentage), // discount를 지방으로 변환
-            foodName: res.data.title, // 제품 이름을 음식 이름으로 사용
-          };
-
-          setAnalysisResult(dummyAnalysis);
+          // const res = await axios.get('https://dummyjson.com/products/3');
+          // setAnalysisResult(res.data);
           setIsLoading(false);
         } catch (err) {
           if (axios.isAxiosError(err)) {
@@ -69,38 +61,19 @@ export default function PhotoDisplay() {
   return (
     <div className='flex flex-col justify-center items-center'>
       <section className='flex flex-col justify-center items-center'>
-        <h2 className='text-purple-500 font-semibold'>음식 사진</h2>
         {photoData ? (
           <div
             className='relative w-[400px] h-[400px] lg:w-[500px] lg:h-[500px]'
             style={isMobile() ? undefined : { transform: 'scaleX(-1)' }}
           >
-            <Image src={photoData} fill alt='diet image' className='object-cover rounded-lg' />
+            <Image src={photoData} fill alt='diet image' className='object-cover rounded-3xl' />
           </div>
         ) : (
           <p>분석할 사진이 없습니다.</p>
         )}
       </section>
-      <main className='flex flex-col justify-center items-center'>
-        <h2 className='text-purple-500 font-semibold'>분석 결과</h2>
-        <div className='w-96 h-96 bg-gray-200 rounded-xl flex justify-center items-center'>
-          {isLoading ? (
-            <p>분석 중...</p>
-          ) : error ? (
-            <p className='text-red-500'>{error}</p>
-          ) : analysisResult ? (
-            <div className='space-y-2'>
-              <p className='font-bold text-lg'>{analysisResult.foodName}</p>
-              <p>칼로리: {analysisResult.calories}kcal</p>
-              <p>단백질: {analysisResult.protein}g</p>
-              <p>탄수화물: {analysisResult.carbs}g</p>
-              <p>지방: {analysisResult.fat}g</p>
-            </div>
-          ) : (
-            <p>분석을 시작하세요.</p>
-          )}
-          <p>분석 결과 표시</p>
-        </div>
+      <main className='mt-8 mb-[100px]'>
+        <NutritionChart carbsCalories={1200} proteinCalories={800} fatCalories={600} />
       </main>
     </div>
   );
