@@ -65,6 +65,7 @@ export default function PhotoDisplay() {
       </div>
     );
   }
+  const container = 'w-full max-w-[90vmin] md:max-w-[70vmin] lg:max-w-[60vmin] h-[90vmin] md:h-[70vmin] lg:h-[60vmin]';
 
   return (
     <div className='flex flex-col justify-center items-center'>
@@ -72,7 +73,7 @@ export default function PhotoDisplay() {
         <h2 className='text-purple-500 font-semibold'>음식 사진</h2>
         {photoData ? (
           <div
-            className='relative w-[400px] h-[300px] lg:w-[800px] lg:h-[500px]'
+            className='relative w-[400px] h-[400px] lg:w-[500px] lg:h-[500px]'
             style={isMobile() ? undefined : { transform: 'scaleX(-1)' }}
           >
             <Image src={photoData} fill alt='diet image' className='object-cover rounded-lg' />
