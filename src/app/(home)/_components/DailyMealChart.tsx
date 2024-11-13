@@ -11,12 +11,12 @@ interface DailyMealProps {
 }
 
 export default function DailyMealChart({ icon: Icon, iconColor, dayTime, calorie }: DailyMealProps) {
+  const color = `text-${iconColor}-300`;
   return (
-    <section className='flex items-center gap-4 mb-4 hover:scale-110 duration-200'>
-      <Icon size={45} className={`text-${iconColor}-300`} />
-      <div className='flex flex-col'>
+    <section className='w-full flex justify-evenly items-center gap-4 mb-2 hover:scale-110 duration-200 shadow-sm'>
+      <Icon size={45} className={color} />
+      <div className='flex flex-col items-center'>
         <h1 className='font-bold'>{dayTime}</h1>
-        <h2>{calorie}karl</h2>
         <CalorieBar current={calorie} max={2000} />
       </div>
       <Link href='/diet' className='hover:scale-110'>

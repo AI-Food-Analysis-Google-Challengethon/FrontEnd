@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
 import { Area } from 'react-easy-crop';
+import { IoFastFoodOutline } from 'react-icons/io5';
 
 const isMobile = () => {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -33,11 +34,9 @@ async function getCroppedImg(imageSrc: string, pixelCrop: Area): Promise<string>
     throw new Error('No 2d context');
   }
 
-  // 캔버스 설정
   canvas.width = pixelCrop.width;
   canvas.height = pixelCrop.height;
 
-  // 이미지 그리기
   ctx.drawImage(
     image,
     pixelCrop.x,
@@ -83,22 +82,24 @@ export const PhotoView = ({ photoData, onSave, onRetake }: PhotoViewProps) => {
 
   const handleSave = () => {
     if (croppedImage) {
-      // 크롭된 이미지가 있으면 그것을 저장
       const link = document.createElement('a');
       link.href = croppedImage;
       link.download = 'cropped-photo.jpg';
       link.click();
     } else {
-      // 없으면 원본 저장
       onSave();
     }
   };
 
   return (
-    <div className='flex flex-col items-center gap-4 w-full h-full'>
-      <div className='w-full h-full bg-black rounded-lg overflow-hidden relative'>
+    <div className='flex flex-col items-center gap-4 w-full'>
+      <div className='h-[40px] text-xl font-bold text-white flex items-center gap-4 pt-[10px]'>
+        <IoFastFoodOutline />
+        촬영한 사진 <IoFastFoodOutline />
+      </div>
+      <div className='w-full h-[400px] bg-black rounded-lg overflow-hidden relative lg:ml-[100px]'>
         {isCropping ? (
-          <div className='relative w-full h-full'>
+          <div className='relative w-[400px] h-[400px]'>
             <Cropper
               image={photoData}
               crop={crop}
@@ -107,6 +108,13 @@ export const PhotoView = ({ photoData, onSave, onRetake }: PhotoViewProps) => {
               onCropChange={setCrop}
               onZoomChange={setZoom}
               onCropComplete={onCropComplete}
+              style={{
+                containerStyle: {
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: '#000',
+                },
+              }}
             />
           </div>
         ) : (
@@ -142,7 +150,7 @@ export const PhotoView = ({ photoData, onSave, onRetake }: PhotoViewProps) => {
           </>
         )}
         {isCropping && (
-          <>
+          <div className='flex flex-col items-center gap-5 pt-2'>
             <button onClick={handleCropImage} className='px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600'>
               잘라내기 완료
             </button>
@@ -152,7 +160,7 @@ export const PhotoView = ({ photoData, onSave, onRetake }: PhotoViewProps) => {
             >
               취소
             </button>
-          </>
+          </div>
         )}
       </div>
     </div>
