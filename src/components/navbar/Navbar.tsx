@@ -9,7 +9,7 @@ export default function Navbar() {
         <BackButton />
       </div>
       <Link href='/' className='text-blue-400 text-3xl  font-bold  p-2 rounded-3xl hover:bg-blue-100 hover:scale-'>
-        천리안
+        푸딧
       </Link>
       <div className='absolute top-2 lg:top-5 right-3 flex justify-center items-center gap-4'>
         <NavbarInLogin />
