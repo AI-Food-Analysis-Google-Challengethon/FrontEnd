@@ -20,7 +20,6 @@ const isMobile = () => {
 export default function PhotoDisplay() {
   const { photoData } = usePhotoStore();
   const [isMounted, setIsMounted] = useState(false);
-  const [analysisResult, setAnalysisResult] = useState<AnalysisResultProps | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -50,7 +49,7 @@ export default function PhotoDisplay() {
     }
   }, [photoData]);
 
-  if (!isMounted) {
+  if (!isMounted || isLoading) {
     return (
       <div>
         <p>사진 불러오는 중...</p>
