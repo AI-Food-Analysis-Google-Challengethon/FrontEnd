@@ -65,7 +65,6 @@ export default function PhotoDisplay() {
       </div>
     );
   }
-  const container = 'w-full max-w-[90vmin] md:max-w-[70vmin] lg:max-w-[60vmin] h-[90vmin] md:h-[70vmin] lg:h-[60vmin]';
 
   return (
     <div className='flex flex-col justify-center items-center'>
