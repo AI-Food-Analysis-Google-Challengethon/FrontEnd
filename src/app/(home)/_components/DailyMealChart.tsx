@@ -17,7 +17,7 @@ export default function DailyMealChart({ icon: Icon, iconColor, dayTime, calorie
       <div className='flex flex-col'>
         <h1 className='font-bold'>{dayTime}</h1>
         <h2>{calorie}karl</h2>
-        <CalorieBar current={calorie} max={3000} />
+        <CalorieBar current={calorie} max={2000} />
       </div>
       <Link href='/diet' className='hover:scale-110'>
         <FaCameraRetro size={30} />
