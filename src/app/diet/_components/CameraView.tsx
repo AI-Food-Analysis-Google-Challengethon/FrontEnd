@@ -12,13 +12,13 @@ const isMobile = () => {
 
 export const CameraView = ({ videoRef, isVideoVisible, onTakePhoto, onStopCamera }: CameraViewProps) => (
   <div className='flex flex-col items-center gap-4 w-full h-full'>
-    <div className='relative w-full h-full bg-black rounded-lg overflow-hidden'>
+    <div className='relative w-full h-full bg-white rounded-lg overflow-hidden'>
       <video
         ref={videoRef}
         autoPlay
         playsInline
         style={isMobile() ? undefined : { transform: 'scaleX(-1)' }}
-        className={`w-full h-full object-cover ${isVideoVisible ? 'block' : 'hidden'}`}
+        className={`w-full h-full object-contain ${isVideoVisible ? 'block' : 'hidden'}`}
       />
       {!isVideoVisible && (
         <div className='absolute inset-0 flex items-center justify-center text-white'>카메라 로딩 중...</div>
