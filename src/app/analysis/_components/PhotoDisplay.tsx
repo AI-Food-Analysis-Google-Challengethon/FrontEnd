@@ -5,14 +5,6 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import NutritionChart from './NutritionChart';
 
-interface AnalysisResultProps {
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-  foodName: string;
-}
-
 const isMobile = () => {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 };
