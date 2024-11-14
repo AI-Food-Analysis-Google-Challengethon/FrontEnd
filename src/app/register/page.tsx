@@ -1,192 +1,198 @@
-"use client";
-import { useState, ChangeEvent, FormEvent } from "react";
-import axios from "axios";
-import { API_URL } from "@/app/api/[auth]/[...nextauth]/constant";
+'use client';
+import { useState, ChangeEvent, FormEvent } from 'react';
+import axios from 'axios';
 
-
-// 폼 데이터 타입 정의
 interface FormData {
   nickname: string;
-  age: string;
   height: string;
   weight: string;
+  age: string;
+  gender: 'MALE' | 'FEMALE';
+  school_name: string;
+  school_code: string;
   profileImage: File | null;
-  medicalCondition?: string; // 의료 상태 (옵션)
 }
 
-const PersonalInfoPage = () => {
-  // 기본 프로필 이미지 URL 설정
-  const defaultProfileImage = "https://w7.pngwing.com/pngs/710/71/png-transparent-profle-person-profile-user-circle-icons-icon-thumbnail.png"; // 기본 이미지 경로
+export default function PersonalInfoPage() {
+  const defaultImage =
+    'https://w7.pngwing.com/pngs/710/71/png-transparent-profle-person-profile-user-circle-icons-icon-thumbnail.png';
 
-  // 상태 변수 설정
   const [formData, setFormData] = useState<FormData>({
-    nickname: "",
-    age: "",
-    height: "",
-    weight: "",
+    nickname: '',
+    height: '',
+    weight: '',
+    age: '',
+    gender: 'MALE',
+    school_name: '',
+    school_code: '',
     profileImage: null,
   });
+  const [imagePreview, setImagePreview] = useState<string>(defaultImage);
 
-  // 이미지 미리보기 URL 상태 추가
-  const [profileImagePreview, setProfileImagePreview] = useState<string>(defaultProfileImage);
-
-  // 입력값 변화 처리
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // 프로필 이미지 파일 처리
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
+    const file = e.target.files?.[0];
     if (file) {
-      setFormData((prevData) => ({
-        ...prevData,
-        profileImage: file,
-      }));
-      // 미리보기 이미지 업데이트
-      setProfileImagePreview(URL.createObjectURL(file));
+      setFormData((prev) => ({ ...prev, profileImage: file }));
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
-  // 폼 제출 처리
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // 폼 데이터 객체를 JSON으로 변환
-    const dataToSend = {
+    const info = {
       nickname: formData.nickname,
-      age: formData.age,
-      height: formData.height,
-      weight: formData.weight,
+      height: Number(formData.height),
+      weight: Number(formData.weight),
+      age: Number(formData.age),
+      gender: formData.gender,
+      school_name: formData.school_name,
+      school_code: formData.school_code,
     };
 
     const formDataToSend = new FormData();
-    // JSON 데이터를 FormData로 추가
-    for (const key in dataToSend) {
-      formDataToSend.append(key, dataToSend[key as keyof typeof dataToSend]);
-    }
+    formDataToSend.append('info', JSON.stringify(info));
 
-    // 프로필 이미지가 있을 경우 첨부
     if (formData.profileImage) {
-      formDataToSend.append("profileImage", formData.profileImage);
+      formDataToSend.append('profile_image', formData.profileImage);
     }
 
     try {
-      // Axios로 백엔드 API에 POST 요청을 보냄
-      const response = await axios.post(`${API_URL}/register/test01`, formDataToSend, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      // 요청이 성공하면 응답 처리
-      if (response.status === 200) {
-        alert("Data submitted successfully!");
+      const response = await axios.post('/api/member/sign-up', formDataToSend);
+      if (response.data.status === 200) {
+        alert('회원가입이 완료되었습니다!');
       }
     } catch (error) {
-      console.error("Error submitting data:", error);
-      alert("Error submitting data.");
+      console.error('Error:', error);
+      alert('회원가입 중 오류가 발생했습니다.');
     }
   };
 
   return (
-    <div >
-      <form onSubmit={handleSubmit} className="flex justify-center items-center flex flex-col mt-10">
-        <div>
-          <h1 className="font-bold text-2xl" >회원정보</h1>
-          <div className="mt-6">
-            <img
-              src={profileImagePreview}
-              alt="Profile Preview"
-              className="w-[100px] h-[100px] object-cover rounded-full mt-2"
-            />
-          </div>
-          <input
-            type="file"
-            id="profileImage"
-            name="profileImage"
-            onChange={handleFileChange}
-            className="hidden"
-          />
-          <div className="flex justify-end items-center -mt-2">
-            <button
-              type="button"
-              onClick={() => document.getElementById("profileImage")?.click()}
-              className="px-2 py-2 text-sm cursor-pointer bg-gray-500 border-none rounded"
-            >
-            </button>
-          </div>
+    <div className='p-4 max-w-md mx-auto'>
+      <form onSubmit={handleSubmit} className='space-y-6'>
+        <h1 className='text-2xl font-bold text-center'>회원정보</h1>
+
+        {/* 프로필 이미지 */}
+        <div className='text-center'>
+          <img src={imagePreview} alt='Profile' className='w-24 h-24 rounded-full mx-auto object-cover' />
+          <input type='file' id='profileImage' onChange={handleFileChange} className='hidden' />
+          <button
+            type='button'
+            onClick={() => document.getElementById('profileImage')?.click()}
+            className='mt-2 px-4 py-2 text-sm bg-gray-500 text-white rounded'
+          >
+            이미지 선택
+          </button>
         </div>
 
-        <div className="flex flex-col items-start">
-          <label htmlFor="nickname" className="flex items-center mt-20 text-gray-400">닉네임: </label>
-          <div className="flex items-center">
+        {/* 입력 필드들 */}
+        <div className='space-y-4'>
+          <div>
+            <label htmlFor='nickname' className='block text-gray-700'>
+              닉네임
+            </label>
             <input
-              type="text"
-              id="nickname"
-              name="nickname"
+              type='text'
+              name='nickname'
               value={formData.nickname}
               onChange={handleChange}
-              className="border-0 border-b border-blue-500 focus:outline-none focus:border-blue-700 w-60 mt-3"
+              className='w-full border-b border-blue-500 focus:outline-none'
             />
           </div>
 
-          <div className="flex justify-around items-center mt-10 space-x-16">
-            <label htmlFor="age" className="text-gray-400">나이</label>
+          <div className='grid grid-cols-2 gap-4'>
             <div>
-              <label htmlFor="height" className="text-gray-400">신장(cm)</label>
-              <label htmlFor="weight" className="text-gray-400"> / 체중 (kg): </label>
+              <label htmlFor='age' className='block text-gray-700'>
+                나이
+              </label>
+              <input
+                type='number'
+                name='age'
+                value={formData.age}
+                onChange={handleChange}
+                className='w-full border-b border-blue-500 focus:outline-none'
+              />
+            </div>
+            <div>
+              <label htmlFor='gender' className='block text-gray-700'>
+                성별
+              </label>
+              <select
+                name='gender'
+                value={formData.gender}
+                onChange={(e) => setFormData((prev) => ({ ...prev, gender: e.target.value as 'MALE' | 'FEMALE' }))}
+                className='w-full border-b border-blue-500 focus:outline-none'
+              >
+                <option value='MALE'>남성</option>
+                <option value='FEMALE'>여성</option>
+              </select>
             </div>
           </div>
 
-          <div className="flex justify-center items-center mt-3 space-x-14">
+          <div className='grid grid-cols-2 gap-4'>
             <div>
+              <label htmlFor='height' className='block text-gray-700'>
+                신장(cm)
+              </label>
               <input
-                type="number"
-                id="age"
-                name="age"
-                value={formData.age}
+                type='number'
+                name='height'
+                value={formData.height}
                 onChange={handleChange}
-                className="border-0 border-b border-blue-500 focus:outline-none focus:border-blue-700 w-12"
+                className='w-full border-b border-blue-500 focus:outline-none'
               />
             </div>
-
-            <div className="flex justify-center items-center space-x-5">
-              <div>
-
-                <input
-                  type="number"
-                  id="height"
-                  name="height"
-                  value={formData.height}
-                  onChange={handleChange}
-                  className="border-0 border-b border-blue-500 focus:outline-none focus:border-blue-700 w-12"
-                />
-              </div>
-              <div>/</div>
-              <div>
-
-                <input
-                  type="number"
-                  id="weight"
-                  name="weight"
-                  value={formData.weight}
-                  onChange={handleChange}
-                  className="border-0 border-b border-blue-500 focus:outline-none focus:border-blue-700 w-12"
-                />
-              </div>
+            <div>
+              <label htmlFor='weight' className='block text-gray-700'>
+                체중(kg)
+              </label>
+              <input
+                type='number'
+                name='weight'
+                value={formData.weight}
+                onChange={handleChange}
+                className='w-full border-b border-blue-500 focus:outline-none'
+              />
             </div>
+          </div>
+
+          <div>
+            <label htmlFor='school_name' className='block text-gray-700'>
+              학교명
+            </label>
+            <input
+              type='text'
+              name='school_name'
+              value={formData.school_name}
+              onChange={handleChange}
+              className='w-full border-b border-blue-500 focus:outline-none'
+            />
+          </div>
+
+          <div>
+            <label htmlFor='school_code' className='block text-gray-700'>
+              학교 코드
+            </label>
+            <input
+              type='text'
+              name='school_code'
+              value={formData.school_code}
+              onChange={handleChange}
+              className='w-full border-b border-blue-500 focus:outline-none'
+            />
           </div>
         </div>
 
-        <button type="submit" className="flex items-center mt-20 fixed bottom-0 mb-10 px-40 py-3 font-bold text-xl cursor-pointer border-none rounded bg-gray-500">다음</button>
+        <button type='submit' className='w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600'>
+          다음
+        </button>
       </form>
     </div>
   );
-};
-
-export default PersonalInfoPage;
+}
