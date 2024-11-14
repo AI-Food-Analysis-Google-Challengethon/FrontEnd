@@ -1,10 +1,11 @@
 'use client';
-import { usePhotoStore } from '@/store/usePhotoStore';
 import Link from 'next/link';
 import { useState, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
 import { Area } from 'react-easy-crop';
 import { IoFastFoodOutline } from 'react-icons/io5';
+import getCroppedImg from './getCroppedImg';
+import { useDietStore } from '@/store/useDietStore';
 
 const isMobile = () => {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -16,49 +17,14 @@ interface PhotoViewProps {
   onRetake: () => void;
 }
 
-// 이미지 크롭 함수
-const createImage = (url: string): Promise<HTMLImageElement> =>
-  new Promise((resolve, reject) => {
-    const image = new Image();
-    image.addEventListener('load', () => resolve(image));
-    image.addEventListener('error', (error) => reject(error));
-    image.src = url;
-  });
-
-async function getCroppedImg(imageSrc: string, pixelCrop: Area): Promise<string> {
-  const image = await createImage(imageSrc);
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-
-  if (!ctx) {
-    throw new Error('No 2d context');
-  }
-
-  canvas.width = pixelCrop.width;
-  canvas.height = pixelCrop.height;
-
-  ctx.drawImage(
-    image,
-    pixelCrop.x,
-    pixelCrop.y,
-    pixelCrop.width,
-    pixelCrop.height,
-    0,
-    0,
-    pixelCrop.width,
-    pixelCrop.height
-  );
-
-  return canvas.toDataURL('image/jpeg');
-}
-
 export const PhotoView = ({ photoData, onSave, onRetake }: PhotoViewProps) => {
-  const { setPhotoData } = usePhotoStore();
+  const { setPhotoData } = useDietStore();
   const [isCropping, setIsCropping] = useState(false);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const { type } = useDietStore();
 
   const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -95,7 +61,7 @@ export const PhotoView = ({ photoData, onSave, onRetake }: PhotoViewProps) => {
     <div className='flex flex-col items-center gap-4 w-full'>
       <div className='h-[40px] text-xl font-bold text-white flex items-center gap-4 pt-[10px]'>
         <IoFastFoodOutline />
-        촬영한 사진 <IoFastFoodOutline />
+        {`촬영한 ${type} 사진`} <IoFastFoodOutline />
       </div>
       <div className='w-full h-[400px] lg:h-[500px] bg-black rounded-lg overflow-hidden relative'>
         {isCropping ? (
