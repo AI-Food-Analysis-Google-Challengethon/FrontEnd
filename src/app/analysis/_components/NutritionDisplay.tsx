@@ -15,7 +15,7 @@ interface nutritionDataProps {
 
 export default function NutritionDisplay({ nutritionData }: { nutritionData: nutritionDataProps }) {
   return (
-    <section className='w-full max-w-2xl p-6 bg-white rounded-xl shadow-lg mt-8'>
+    <section className='w-full p-4 bg-white rounded-xl shadow-lg mb-[50px]'>
       <h2 className='text-2xl font-bold text-gray-800 mb-6'>영양 분석 결과</h2>
 
       <div className='grid grid-cols-2 md:grid-cols-3 gap-6'>
