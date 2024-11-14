@@ -4,6 +4,7 @@ interface NutritionChartProps {
   carbsCalories: number;
   proteinCalories: number;
   fatCalories: number;
+  etcCalories?: number;
 }
 
 interface CustomBarProps extends RectangleProps {
@@ -32,16 +33,16 @@ interface ChartData {
   color: string;
 }
 
-const NutritionChart = ({ carbsCalories, proteinCalories, fatCalories }: NutritionChartProps) => {
-  const totalCalories = carbsCalories + proteinCalories + fatCalories;
+const NutritionChart = ({ carbsCalories, proteinCalories, fatCalories, etcCalories }: NutritionChartProps) => {
+  const totalCalories = carbsCalories + proteinCalories + fatCalories + (etcCalories || 0);
 
-  // 총칼로리 바를 위한 데이터
   const totalData = [
     {
       name: '총 섭취',
       carbs: carbsCalories,
       protein: proteinCalories,
       fat: fatCalories,
+      etc: etcCalories || 0,
     },
   ];
 
@@ -61,6 +62,15 @@ const NutritionChart = ({ carbsCalories, proteinCalories, fatCalories }: Nutriti
       value: fatCalories,
       color: '#FFE27B',
     },
+    ...(etcCalories
+      ? [
+          {
+            name: '기타',
+            value: etcCalories,
+            color: '#A4A4A4',
+          },
+        ]
+      : []),
   ];
 
   const CustomBar = (props: CustomBarProps) => {
@@ -93,7 +103,6 @@ const NutritionChart = ({ carbsCalories, proteinCalories, fatCalories }: Nutriti
         <div className='text-lg font-bold'>{totalCalories}karl</div>
       </div>
 
-      {/* 총 칼로리 바 차트 */}
       <div className='h-[40px] mb-6'>
         <ResponsiveContainer width='100%' height='100%'>
           <ComposedChart
@@ -128,13 +137,22 @@ const NutritionChart = ({ carbsCalories, proteinCalories, fatCalories }: Nutriti
               isAnimationActive={true}
               animationDuration={1000}
               animationBegin={400}
-              radius={[0, 4, 4, 0]}
             />
+            {etcCalories ? (
+              <Bar
+                dataKey='etc'
+                stackId='a'
+                fill='#A4A4A4'
+                isAnimationActive={true}
+                animationDuration={1000}
+                animationBegin={600}
+                radius={[0, 4, 4, 0]}
+              />
+            ) : null}
           </ComposedChart>
         </ResponsiveContainer>
       </div>
 
-      {/* 세부 영양소 차트 */}
       <div className='flex flex-col space-y-2'>
         {data.map((item) => (
           <div key={item.name} className='flex flex-col'>
@@ -142,7 +160,11 @@ const NutritionChart = ({ carbsCalories, proteinCalories, fatCalories }: Nutriti
             <div className='h-[20px]'>
               <ResponsiveContainer width='100%' height='100%'>
                 <BarChart data={[item]} layout='vertical' barSize={20}>
-                  <XAxis type='number' hide domain={[0, Math.max(carbsCalories, proteinCalories, fatCalories)]} />
+                  <XAxis
+                    type='number'
+                    hide
+                    domain={[0, Math.max(carbsCalories, proteinCalories, fatCalories, etcCalories || 0)]}
+                  />
                   <YAxis type='category' hide />
                   <Tooltip
                     position={{ y: -30 }}

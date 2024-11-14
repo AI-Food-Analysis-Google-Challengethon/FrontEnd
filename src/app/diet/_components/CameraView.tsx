@@ -15,7 +15,6 @@ const isMobile = () => {
 
 export default function CameraView({ videoRef, isVideoVisible, onTakePhoto }: CameraViewProps) {
   const { type } = useDietStore();
-  console.log('dddd', type);
 
   return (
     <div className=' w-full flex flex-col items-center gap-4'>

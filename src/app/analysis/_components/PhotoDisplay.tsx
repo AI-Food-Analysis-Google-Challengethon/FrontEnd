@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import NutritionChart from './NutritionChart';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
+import NutritionDisplay from './NutritionDisplay';
 
 interface CustomSession {
   accessToken?: string;
@@ -80,10 +81,10 @@ export default function PhotoDisplay() {
         } catch (err) {
           if (axios.isAxiosError(err)) {
             console.log(err.message);
-            //   if (err.response?.status === 401) {
-            //     redirect('/api/auth/signin');
-            //   }
-            //   setError(err.response?.data?.msg || '사진 분석 중 오류가 발생했습니다.');
+            if (err.response?.status === 401) {
+              redirect('/api/auth/signin');
+            }
+            setError(err.response?.data?.msg || '사진 분석 중 오류가 발생했습니다.');
           }
         } finally {
           setIsLoading(false);
@@ -119,9 +120,18 @@ export default function PhotoDisplay() {
         )}
       </section>
       <main className='mt-8 mb-[100px]'>
-        <NutritionChart carbsCalories={1200} proteinCalories={800} fatCalories={600} />
+        {nutritionData && (
+          <NutritionChart
+            carbsCalories={nutritionData?.carbs * 4}
+            proteinCalories={nutritionData?.protein * 4}
+            fatCalories={nutritionData?.fat * 9}
+            etcCalories={
+              nutritionData.total_kcal - nutritionData?.carbs * 4 - nutritionData?.protein * 4 - nutritionData?.fat * 9
+            }
+          />
+        )}{' '}
       </main>
-      {nutritionData ? <section className=''>{nutritionData.total_kcal}</section> : <div>영양 데이터가 없습니다.</div>}
+      {nutritionData ? <NutritionDisplay nutritionData={nutritionData} /> : <div>영양 데이터가 없습니다.</div>}
     </div>
   );
 }
