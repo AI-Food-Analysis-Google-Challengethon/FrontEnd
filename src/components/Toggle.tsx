@@ -16,14 +16,14 @@ export default function Toggle() {
     setOpenToggle(!openToggle);
   };
   return (
-    <div className='relative flex mt-[15px] lg:mt-0 items-center'>
+    <div className='relative z-50 flex mt-[15px] lg:mt-0 items-center'>
       {name && <span className='text-[15px] font-semibold mr-[20px]'>{name} 님</span>}
       <button onClick={handleToggle}>
         <RxHamburgerMenu size={35} className='hover:bg-neutral-300 rounded-full p-1' />
       </button>
       {openToggle && (
         <section className='absolute top-9 right-1 w-[150px] border-2 border-blue-300 bg-blue-50 shadow-lg rounded-2xl flex flex-col items-center gap-3 px-2 py-2'>
-          <Link href='studnet' className={linkForPageClassName}>
+          <Link href='student' className={linkForPageClassName}>
             Student Page
           </Link>
           <Link href='calendar' className={linkForPageClassName}>
