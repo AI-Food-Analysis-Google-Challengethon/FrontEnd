@@ -25,11 +25,11 @@ async function getResults(): Promise<ApiResponse>{
 export default async function analysisResults() {
     const res = await getResults();
     return (
-        <div className="flex justify-center items-center flex flex-col">
+        <div className="flex justify-center items-center flex flex-col ">
             <h1>1. 이미지</h1>
             <img src={res.image} alt={res.foodType} />
             <h1>2. 음식종류: {res.foodType}</h1>
-            <h1>3. 영양성분 결과</h1>
+            <h1>3. 영양성분 결과 </h1>
             <div>
                 {res.nutritionDetails.map((nutrition, index) => (
                     <h2 key={index}>{nutrition.name}: {nutrition.value}</h2>
