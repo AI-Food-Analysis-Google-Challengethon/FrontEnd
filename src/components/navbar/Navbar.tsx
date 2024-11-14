@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import BackButton from './BackButton';
-import NavbarInLogin from './NavbarInLogin';
+import Toggle from '../Toggle';
 
 export default function Navbar() {
   return (
@@ -12,7 +12,7 @@ export default function Navbar() {
         푸딧
       </Link>
       <div className='absolute top-1 lg:top-4 right-3 flex justify-center items-center gap-4'>
-        <NavbarInLogin />
+        <Toggle />
       </div>
     </nav>
   );

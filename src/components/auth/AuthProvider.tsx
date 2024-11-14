@@ -4,7 +4,7 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 
-export default function AuthProvider() {
+export default function AuthProvider({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
   const setAuth = useAuthStore((state) => state.setAuth);
   const clearAuth = useAuthStore((state) => state.clearAuth);
@@ -17,5 +17,5 @@ export default function AuthProvider() {
     }
   }, [session, status, setAuth, clearAuth]);
 
-  return <div>AuthProvider</div>;
+  return <>{children}</>;
 }
