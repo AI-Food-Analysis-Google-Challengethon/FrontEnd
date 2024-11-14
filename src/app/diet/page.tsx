@@ -1,8 +1,8 @@
 'use client';
 import { useEffect } from 'react';
-import { CameraView } from './_components/CameraView';
-import { PhotoView } from './_components/PhotoView';
 import { useCamera } from '@/hooks/useCamera';
+import CameraView from './_components/CameraView';
+import { PhotoView } from './_components/PhotoView';
 
 const containerStyle = 'x-[450px] h-[450px] md:w-[490px] md:h-[490px]';
 
