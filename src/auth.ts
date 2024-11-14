@@ -23,12 +23,7 @@ export const authConfig: NextAuthConfig = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      authorization: {
-        params: {
-          redirect_uri: 'https://foods-eat.vercel.app/api/auth/callback/google'
-        }
-      }
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!
     }),
   ],
   secret: process.env.AUTH_SECRET,
