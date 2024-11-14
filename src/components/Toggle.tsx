@@ -27,8 +27,8 @@ export default function Toggle() {
           openToggle ? 'max-h-[500px] py-2 opacity-100' : 'max-h-0 opacity-0'
         } transition-all duration-300 ease-in-out overflow-hidden absolute top-9 right-1 w-[150px] border-2 border-blue-300 bg-blue-50 shadow-lg rounded-2xl flex flex-col items-center gap-3 px-2`}
       >
-        <Link href='student' className={linkForPageClassName}>
-          Student Page
+        <Link href='school' className={linkForPageClassName}>
+          School Page
         </Link>
         <Link href='calendar' className={linkForPageClassName}>
           My Calendar
