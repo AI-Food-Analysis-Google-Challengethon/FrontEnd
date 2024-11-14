@@ -1,20 +1,18 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
 import SignOutButton from '../SignOutButton';
 import Link from 'next/link';
+import { useAuthStore } from '@/store/useAuthStore';
 
 export default function NavbarInLogin() {
-  const { data: session } = useSession();
+  const { name } = useAuthStore();
 
-  console.log(session);
-  console.log(session?.user?.name);
   return (
     <div className='flex items-center'>
-      {session ? (
+      {name ? (
         <div className='flex flex-col items-centers justify-center lg:flex-row lg:gap-4'>
           <SignOutButton />
-          <span className='text-[15px] font-semibold mr-1 mt-[2px] lg:mt-[10px]'>{session.user?.name} 님</span>
+          <span className='text-[15px] font-semibold mr-1 mt-[2px] lg:mt-[10px]'>{name} 님</span>
         </div>
       ) : (
         <Link
