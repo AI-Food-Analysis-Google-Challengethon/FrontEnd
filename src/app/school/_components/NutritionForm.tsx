@@ -64,7 +64,7 @@ const NutritionForm = () => {
       <form onSubmit={handleSubmit} className='space-y-4'>
         <div className='flex gap-4 flex-wrap'>
           <div className='flex-1 min-w-[200px]'>
-            <label className='block text-sm font-medium mb-1 flex items-center gap-1'>
+            <label className='flex text-sm font-medium mb-1 items-center gap-1'>
               <FaCalendar className='text-gray-500' />
               날짜
             </label>

@@ -38,7 +38,7 @@ const isMobile = () => {
 };
 
 export default function PhotoDisplay() {
-  const { data: session, status } = useSession({
+  const { data: session } = useSession({
     required: true,
     onUnauthenticated() {
       redirect('/api/auth/signin');
