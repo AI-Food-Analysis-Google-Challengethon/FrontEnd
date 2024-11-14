@@ -78,12 +78,13 @@ export default function PhotoDisplay() {
             setNutritionData(res.data.data);
           }
         } catch (err) {
-          // if (axios.isAxiosError(err)) {
-          //   if (err.response?.status === 401) {
-          //     redirect('/api/auth/signin');
-          //   }
-          //   setError(err.response?.data?.msg || '사진 분석 중 오류가 발생했습니다.');
-          // }
+          if (axios.isAxiosError(err)) {
+            console.log(err.message);
+            //   if (err.response?.status === 401) {
+            //     redirect('/api/auth/signin');
+            //   }
+            //   setError(err.response?.data?.msg || '사진 분석 중 오류가 발생했습니다.');
+          }
         } finally {
           setIsLoading(false);
         }
