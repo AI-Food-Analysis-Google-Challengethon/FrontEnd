@@ -15,6 +15,8 @@ interface CustomJWT extends JWT {
 // Session 타입 확장
 interface CustomSession extends Session {
   accessToken?: string;
+  nickname?: string;
+  email?: string;
 }
 
 export const authConfig: NextAuthConfig = {
@@ -27,6 +29,7 @@ export const authConfig: NextAuthConfig = {
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt" as const,
+    maxAge: 24 * 60 * 60, // 1일
   },
   callbacks: {
     async signIn({ account }) {
@@ -40,10 +43,10 @@ export const authConfig: NextAuthConfig = {
           return true;
         } catch (error) {
           console.error('토큰 전송 실패:', error);
-          return true;
+          return true;  // false 로 변경 
         }
       }
-      return true;
+      return true;  // false 로 변경
     },
     async jwt({ token, account }: { token: CustomJWT; account: Account | null }) {
       if (account?.access_token) {
