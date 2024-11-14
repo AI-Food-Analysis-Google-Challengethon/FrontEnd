@@ -105,16 +105,20 @@ export default function PhotoDisplay() {
 
   return (
     <div className='flex flex-col justify-center items-center'>
-      <h1 className='text-3xl font-extrabold my-8 text-blue-500'>{type} 음식 분석 결과</h1>
+      <h1 className='text-3xl font-extrabold my-8 text-blue-500'>{type} 음식 분석</h1>
       {error && <div className='text-xl text-red-600'>알 수 없는 오류가 발생했습니다.</div>}
       <section className='flex flex-col justify-center items-center'>
         {photoData ? (
-          <div
-            className='relative w-[400px] h-[400px] lg:w-[500px] lg:h-[500px]'
-            style={isMobile() ? undefined : { transform: 'scaleX(-1)' }}
-          >
-            <Image src={photoData} fill alt='diet image' className='object-cover rounded-3xl' />
-          </div>
+          <>
+            {' '}
+            <div
+              className='relative w-[400px] h-[400px] lg:w-[500px] lg:h-[500px]'
+              style={isMobile() ? undefined : { transform: 'scaleX(-1)' }}
+            >
+              <Image src={photoData} fill alt='diet image' className='object-cover rounded-3xl' />
+            </div>{' '}
+            <h2 className='text-[15px] lg:text-[30px] mt-[20px] text-neutral-500'>Ai 분석 결과</h2>
+          </>
         ) : (
           <p>분석할 사진이 없습니다.</p>
         )}
