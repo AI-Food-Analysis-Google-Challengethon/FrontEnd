@@ -74,7 +74,7 @@ export default function PersonalInfoPage() {
   };
 
   return (
-    <div className='p-4 max-w-md mx-auto'>
+    <div className='p-2 max-w-md mx-auto'>
       <form onSubmit={handleSubmit} className='space-y-6'>
         <h1 className='text-2xl font-bold text-center'>회원정보</h1>
 
@@ -92,7 +92,7 @@ export default function PersonalInfoPage() {
         </div>
 
         {/* 입력 필드들 */}
-        <div className='space-y-4'>
+        <div className='space-y-3'>
           <div>
             <label htmlFor='nickname' className='block text-gray-700'>
               닉네임
