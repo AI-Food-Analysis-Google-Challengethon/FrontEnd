@@ -30,7 +30,7 @@ export default function SuccessPage() {
 
         if (res) {
           console.log('응답 정보 테스트', res.data);
-          setAuth(res.data.name, res.data.email, res.data.profileImage);
+          setAuth(res.data.data.name, res.data.data.email, res.data.data.profileImage);
           setInfo(
             res.data.data.height,
             res.data.data.weight,
