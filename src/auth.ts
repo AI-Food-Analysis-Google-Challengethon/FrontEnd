@@ -17,6 +17,7 @@ interface CustomSession extends Session {
   accessToken?: string;
   nickname?: string;
   email?: string;
+  profileImage?: string;
 }
 
 export const authConfig: NextAuthConfig = {

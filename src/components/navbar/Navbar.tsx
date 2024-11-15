@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import BackButton from './BackButton';
-import Toggle from '../Toggle';
+import Toggle from './Toggle';
 import Image from 'next/image';
 
 export default function Navbar() {

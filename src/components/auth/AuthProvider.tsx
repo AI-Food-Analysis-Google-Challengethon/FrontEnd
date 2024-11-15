@@ -11,7 +11,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     if (status === 'authenticated' && session) {
-      setAuth(session.user?.name || '', session.user?.email || '');
+      setAuth(session.user?.name || '', session.user?.email || '', session.user?.image || '');
     } else if (status === 'unauthenticated') {
       clearAuth();
     }

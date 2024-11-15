@@ -3,14 +3,16 @@ import { useAuthStore } from '@/store/useAuthStore';
 import Link from 'next/link';
 import { useState } from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import SignOutButton from './SignOutButton';
+import SignOutButton from '../SignOutButton';
+import Image from 'next/image';
 
 const linkForPageClassName =
   'w-full py-1 font-semibold text-neutral-700 text-center hover:bg-blue-100 hover:scale-105 rounded-2xl duration-200';
 
 export default function Toggle() {
   const [openToggle, setOpenToggle] = useState(false);
-  const { name } = useAuthStore();
+  const { name, profileImage } = useAuthStore();
+  const profilePic = profileImage || '';
 
   const handleToggle = () => {
     setOpenToggle(!openToggle);
@@ -18,7 +20,12 @@ export default function Toggle() {
 
   return (
     <div className='relative z-50 flex mt-[15px] lg:mt-0 items-center '>
-      {name && <span className='text-[15px] font-semibold mr-[20px]'>{name} 님</span>}
+      {name && (
+        <div className='flex items-center mr-[5px] lg:mr-[20px]'>
+          <span className='text-[12px] lg:text-[15px] font-semibold mr-[10px]'>{name} 님</span>
+          <Image src={profilePic} alt='profile' width={28} height={28} className='rounded-full' />
+        </div>
+      )}
       <button onClick={handleToggle}>
         <RxHamburgerMenu size={35} className='hover:bg-neutral-300 rounded-full p-1' />
       </button>
@@ -39,12 +46,14 @@ export default function Toggle() {
 
         <>
           {name ? (
-            <SignOutButton />
-          ) : (
             <>
               <Link href='register' className={linkForPageClassName}>
                 Register
               </Link>
+              <SignOutButton />
+            </>
+          ) : (
+            <>
               <Link
                 href='/login'
                 className='font-bold bg-blue-500 mt-[12px] p-2 lg:mt-0 text-white rounded-3xl hover:bg-blue-600 duration-200'
