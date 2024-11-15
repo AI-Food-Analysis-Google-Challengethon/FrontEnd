@@ -3,8 +3,9 @@ import axios from 'axios';
 
 export async function GET() {
   try {
-    const date = new Date().toISOString().split('T')[0].replace(/-/g, '');
-
+    const today = new Date();
+    today.setDate(today.getDate() - 1); // 하루 전으로 설정
+    const date = today.toISOString().split('T')[0].replace(/-/g, '');
 
     const response = await axios.get(
       `https://foodeat.o-r.kr/diets/school?date=${date}`,
