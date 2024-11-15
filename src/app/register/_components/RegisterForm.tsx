@@ -65,8 +65,7 @@ export default function RegisterForm() {
         Number(formData.age),
         formData.gender,
         formData.schoolName,
-        formData.schoolCode,
-        defaultImage
+        formData.schoolCode
       );
 
       console.log('Register api 성공!', res.data);
