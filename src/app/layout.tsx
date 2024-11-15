@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import Navbar from '@/components/navbar/Navbar';
-import { SessionProvider } from 'next-auth/react';
 import { Suspense } from 'react';
 
 const geistSans = localFont({
