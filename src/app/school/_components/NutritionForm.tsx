@@ -35,7 +35,7 @@ const NutritionForm = () => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        setNutritionData(response.data);
+        setNutritionData(response.data.data);
         console.log('영양####@@@@@', response);
       } catch (err) {
         setError('데이터를 불러오는데 실패했습니다.');
