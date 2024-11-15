@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 export default function SuccessPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { setAuth, setInfo } = useAuthStore();
+  const { setAuth } = useAuthStore();
 
   useEffect(() => {
     async function handleAuth() {
