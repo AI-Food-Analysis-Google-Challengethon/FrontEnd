@@ -1,10 +1,10 @@
 import NutritionForm from './_components/NutritionForm';
 
-export default function SchoolPage({
-  searchParams,
-}: {
+interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
-}) {
+}
+
+export default function SchoolPage({ searchParams }: PageProps) {
   const date = searchParams.date as string;
 
   return (
