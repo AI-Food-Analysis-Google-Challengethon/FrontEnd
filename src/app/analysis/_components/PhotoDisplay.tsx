@@ -17,20 +17,18 @@ interface CustomSession {
 
 interface AnalysisResponse {
   status: number;
-  msg: string;
   data: {
-    total_kcal: number;
+    totalKcal: number;
     carbs: number;
     protein: number;
     fat: number;
-    vitamin: {
-      C: number;
-      A: number;
-      B: number;
-    };
     kalium: number;
     natrium: number;
     cholesterol: number;
+    vitaminA: number;
+    vitaminB: number;
+    vitaminC: number;
+    date: string;
   };
 }
 
@@ -66,25 +64,32 @@ export default function PhotoDisplay() {
 
           const formData = new FormData();
           formData.append('image', blob, 'photo.jpg');
-          formData.append('type', type);
-          formData.append('date', new Date().toISOString().slice(0, 10).replace(/-/g, ''));
 
-          const res = await axios.post<AnalysisResponse>('http://localhost:8080/api/diet', formData, {
+          // request 객체를 JSON 문자열로 변환하여 추가
+          const requestData = {
+            type: type,
+            date: new Date().toISOString().slice(0, 10).replace(/-/g, ''),
+          };
+          formData.append('request', JSON.stringify(requestData));
+
+          const res = await axios.post<AnalysisResponse>('/api/diets', formData, {
             headers: {
-              accessToken: session.accessToken, // API 명세에 맞춰 헤더 이름 사용
+              'Content-Type': 'multipart/form-data',
+              Authorization: `Bearer ${session.accessToken}`,
             },
           });
 
-          if (res.data.status === 200) {
+          console.log('테스트 결과', res);
+          if (res.status === 200) {
             setNutritionData(res.data.data);
           }
         } catch (err) {
           if (axios.isAxiosError(err)) {
-            console.log(err.message);
+            console.error(err.message);
             if (err.response?.status === 401) {
               redirect('/api/auth/signin');
             }
-            setError(err.response?.data?.msg || '사진 분석 중 오류가 발생했습니다.');
+            setError(err.response?.data?.message || '사진 분석 중 오류가 발생했습니다.');
           }
         } finally {
           setIsLoading(false);
@@ -97,8 +102,8 @@ export default function PhotoDisplay() {
 
   if (!isMounted || isLoading) {
     return (
-      <div>
-        <p>사진 불러오는 중...</p>
+      <div className='flex justify-center items-center min-h-[200px]'>
+        <p className='text-lg text-gray-600'>사진 분석 중...</p>
       </div>
     );
   }
@@ -106,18 +111,17 @@ export default function PhotoDisplay() {
   return (
     <div className='flex flex-col justify-center items-center'>
       <h1 className='text-3xl font-extrabold my-8 text-blue-500'>{type} 음식 분석</h1>
-      {error && <div className='text-xl text-red-600'>알 수 없는 오류가 발생했습니다.</div>}
+      {error && <div className='text-xl text-red-600'>{error}</div>}
       <section className='flex flex-col justify-center items-center'>
         {photoData ? (
           <>
-            {' '}
             <div
               className='relative w-[400px] h-[400px] lg:w-[500px] lg:h-[500px]'
               style={isMobile() ? undefined : { transform: 'scaleX(-1)' }}
             >
               <Image src={photoData} fill alt='diet image' className='object-cover rounded-3xl' />
-            </div>{' '}
-            <h2 className='text-[15px] lg:text-[30px] mt-[20px] text-neutral-500'>Ai 분석 결과</h2>
+            </div>
+            <h2 className='text-[15px] lg:text-[30px] mt-[20px] text-neutral-500'>AI 분석 결과</h2>
           </>
         ) : (
           <p>분석할 사진이 없습니다.</p>
@@ -126,14 +130,14 @@ export default function PhotoDisplay() {
       <main className='mt-8 mb-[100px]'>
         {nutritionData && (
           <NutritionChart
-            carbsCalories={nutritionData?.carbs * 4}
-            proteinCalories={nutritionData?.protein * 4}
-            fatCalories={nutritionData?.fat * 9}
+            carbsCalories={nutritionData.carbs * 4}
+            proteinCalories={nutritionData.protein * 4}
+            fatCalories={nutritionData.fat * 9}
             etcCalories={
-              nutritionData.total_kcal - nutritionData?.carbs * 4 - nutritionData?.protein * 4 - nutritionData?.fat * 9
+              nutritionData.totalKcal - nutritionData.carbs * 4 - nutritionData.protein * 4 - nutritionData.fat * 9
             }
           />
-        )}{' '}
+        )}
       </main>
       {nutritionData ? <NutritionDisplay nutritionData={nutritionData} /> : <div>영양 데이터가 없습니다.</div>}
     </div>
