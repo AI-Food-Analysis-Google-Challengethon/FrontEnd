@@ -61,7 +61,7 @@ export const PhotoView = ({ photoData, onSave, onRetake }: PhotoViewProps) => {
     <div className='flex flex-col items-center gap-4 w-full'>
       <div className='h-[40px] text-xl font-bold text-white flex items-center gap-4 pt-[10px]'>
         <IoFastFoodOutline />
-        {`촬영한 ${type} 사진`} <IoFastFoodOutline />
+        {`촬영한 ${type}사진`} <IoFastFoodOutline />
       </div>
       <div className='w-full h-[400px] lg:h-[500px] bg-black rounded-lg overflow-hidden relative'>
         {isCropping ? (

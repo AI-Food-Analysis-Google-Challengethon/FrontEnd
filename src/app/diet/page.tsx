@@ -44,9 +44,14 @@ export default function CameraPage() {
     <main className='bg-black w-full h-[calc(100vh-70px)] flex flex-col items-center'>
       {error && <div className='text-red-500 p-2 bg-red-100 rounded'>에러: {error}</div>}
 
-      {stream && (
+      {!photoData && stream && (
         <div className={containerStyle}>
-          <CameraView videoRef={videoRef} isVideoVisible={videoVisible} onTakePhoto={handleTakePhoto} />
+          <CameraView
+            videoRef={videoRef}
+            isVideoVisible={videoVisible}
+            onTakePhoto={handleTakePhoto}
+            setPhotoData={setPhotoData}
+          />
         </div>
       )}
 
