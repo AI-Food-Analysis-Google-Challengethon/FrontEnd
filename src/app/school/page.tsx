@@ -1,11 +1,9 @@
+import { useSearchParams } from 'next/navigation';
 import NutritionForm from './_components/NutritionForm';
 
-interface PageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
-export default function SchoolPage({ searchParams }: PageProps) {
-  const date = searchParams.date as string;
+export default function SchoolPage() {
+  const searchParam = useSearchParams();
+  const date = searchParam.get('date') ?? '';
 
   return (
     <div className='max-w-4xl mx-auto p-6'>
