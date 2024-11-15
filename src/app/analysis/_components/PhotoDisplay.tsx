@@ -69,8 +69,6 @@ export default function PhotoDisplay() {
             },
           });
 
-          console.log('사진은 통과!!', imageUploadRes);
-
           // 분석 요청 준비
           const today = new Date();
           const dateString =
@@ -90,8 +88,6 @@ export default function PhotoDisplay() {
               Authorization: `Bearer ${accessToken}`,
             },
           });
-
-          console.log('2번쨰 최종 분석은 통과!!', analysisRes);
 
           if (analysisRes.status === 200) {
             setNutritionData(analysisRes.data.data);

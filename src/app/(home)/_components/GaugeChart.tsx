@@ -2,19 +2,56 @@
 
 import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
+import axios from 'axios';
+import { redirect } from 'next/navigation';
 
-const GaugeChart = ({ value = 0, min = 0, max = 100 }) => {
+const GaugeChart = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const [score, setScore] = useState(0);
+  const [advice, setAdvice] = useState('');
+  const [date, setDate] = useState('');
 
   useEffect(() => {
     setIsMounted(true);
+
+    const fetchDailyData = async () => {
+      try {
+        const storageToken = localStorage.getItem('accessToken');
+        if (!storageToken) {
+          redirect('/api/auth/signin');
+          return;
+        }
+
+        const response = await axios.get('/api/daily', {
+          headers: {
+            Authorization: `Bearer ${storageToken}`,
+          },
+        });
+
+        if (response.data?.data) {
+          setScore(response.data.data.score);
+          setAdvice(response.data.data.advice);
+          // Format date from YYYYMMDD to YYYY.MM.DD
+          const rawDate = response.data.data.date;
+          const formattedDate = `${rawDate.slice(0, 4)}.${rawDate.slice(4, 6)}.${rawDate.slice(6, 8)}`;
+          setDate(formattedDate);
+        }
+      } catch (error) {
+        console.error('Failed to fetch daily data:', error);
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+          redirect('/api/auth/signin');
+        }
+      }
+    };
+
+    fetchDailyData();
   }, []);
 
   if (!isMounted) {
     return <div className='w-full max-w-md mx-auto h-[200px]' />;
   }
 
-  const percentage = ((value - min) / (max - min)) * 100;
+  const percentage = score;
 
   const data = [
     { name: 'value', value: percentage },
@@ -25,6 +62,7 @@ const GaugeChart = ({ value = 0, min = 0, max = 100 }) => {
 
   return (
     <div className='w-full max-w-md mx-auto flex flex-col items-center'>
+      <div className='text-lg text-gray-600 mb-4'>{date}</div>
       <PieChart width={400} height={100}>
         <Pie
           data={data}
@@ -43,9 +81,14 @@ const GaugeChart = ({ value = 0, min = 0, max = 100 }) => {
         </Pie>
       </PieChart>
       <div className='text-center -mt-10'>
-        <div className='text-2xl font-bold text-gray-800'>{value}</div>
-        <div className='text-sm text-gray-500'>/ {max}</div>
+        <div className='text-2xl font-bold text-gray-800'>{score}</div>
+        <div className='text-sm text-gray-500'>/ 100</div>
       </div>
+      {advice && (
+        <div className='mt-6 p-4 bg-blue-50 rounded-lg max-w-2xl'>
+          <p className='text-sm text-gray-700 leading-relaxed'>{advice}</p>
+        </div>
+      )}
     </div>
   );
 };
