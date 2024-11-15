@@ -2,10 +2,8 @@
 
 import { useState, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
-import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { useAuthStore } from '@/store/useAuthStore';
-import { profile } from 'console';
 
 interface FormData {
   nickname: string;

@@ -1,7 +1,6 @@
 import NextAuth, { NextAuthConfig, Session } from "next-auth"
 import { JWT } from 'next-auth/jwt'
 import GoogleProvider from "next-auth/providers/google"
-import axios from 'axios'
 
 interface Account {
   access_token?: string;
