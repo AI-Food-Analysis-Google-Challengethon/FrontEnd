@@ -18,8 +18,6 @@ export async function POST(request: NextRequest) {
     const signUpData: SignUpRequest = await request.json();
     const authorization = request.headers.get('authorization');
 
-    console.log('Received signup data:', signUpData);
-    
     const response = await axios.post(
       'http://localhost:8080/members/sign-up',
       signUpData,

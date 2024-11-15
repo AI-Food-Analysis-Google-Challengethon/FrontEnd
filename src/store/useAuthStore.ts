@@ -5,11 +5,15 @@ import { persist } from 'zustand/middleware';
 interface AuthStore {
     name: string | null;
     email: string | null;
-    age: number | null;
+    profileImage: string | null;
     height: number | null;
     weight: number | null;
-    setInfo: (age: number, height: number, weight: number) => void;
-    setAuth: (name:string, email:string) => void;
+    age: number | null;
+    gender: string | null;
+    schoolName: string | null;
+    schoolCode: string | null;
+    setInfo: (height: number, weight: number, age: number, gender: string, schoolName: string, schoolCode:string, profileImage: string) => void;
+    setAuth: (name:string, email:string, profileImage:string) => void;
     clearAuth: () => void;
 }
 
@@ -18,12 +22,16 @@ export const useAuthStore = create<AuthStore>()(
       (set) => ({
         name: null,
         email: null,
-        age: null,
+        profileImage: null,
         height: null,
         weight: null,
-        setInfo: (age, height, weight) => set({ age, height, weight }),
-        setAuth: (name, email ) => set({ name, email  }),
-        clearAuth: () => set({ name: null, email:null})
+        age: null,
+        gender: null,
+        schoolName: null,
+        schoolCode: null,
+        setInfo: (height, weight, age, gender, schoolName, schoolCode, profileImage) => set({height, weight, age, gender, schoolName, schoolCode, profileImage}),
+        setAuth: (name, email , profileImage) => set({ name, email, profileImage}),
+        clearAuth: () => set({ name: null, email:null, profileImage: null})
       }),
       {
         name: 'auth-store',
