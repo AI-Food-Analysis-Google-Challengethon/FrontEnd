@@ -1,5 +1,4 @@
 'use client';
-import { useState } from 'react';
 import { useDietStore } from '@/store/useDietStore';
 import { AiFillSlackCircle } from 'react-icons/ai';
 import { FaCameraRetro } from 'react-icons/fa';
