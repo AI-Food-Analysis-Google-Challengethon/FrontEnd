@@ -28,9 +28,14 @@ const NutritionForm = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/school');
+        const accessToken = localStorage.getItem('accessToken');
+        const response = await axios.get('/api/school', {
+          headers: {
+            Authorization: accessToken,
+          },
+        });
         setNutritionData(response.data);
-        console.log('영양####@@@@@', response.data);
+        console.log('영양####@@@@@', response);
       } catch (err) {
         setError('데이터를 불러오는데 실패했습니다.');
         console.error('Error fetching nutrition data:', err);
@@ -51,15 +56,13 @@ const NutritionForm = () => {
   if (error) return <div className='p-4 bg-red-100 text-red-700 rounded-md'>{error}</div>;
   if (!nutritionData) return null;
 
-  const formattedDate = nutritionData.date.replace(/(\d{4})(\d{2})(\d{2})/, '$1년 $2월 $3일');
-
   console.log('영양####@@@@@22222222222', nutritionData);
 
   return (
     <div className='bg-white rounded-xl shadow-lg p-6 mb-6 transition-all duration-300 hover:shadow-xl'>
       <h1 className='text-2xl font-bold mb-6 flex items-center gap-2 text-gray-800'>
         <FaUtensils className='text-blue-500' />
-        {formattedDate} {nutritionData.type === 'LUNCH' ? '점심' : '저녁'} 급식 영양 분석
+        점심 급식 영양 분석
       </h1>
 
       <div className='space-y-6'>
