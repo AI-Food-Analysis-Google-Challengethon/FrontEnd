@@ -14,7 +14,7 @@ export default function SuccessPage() {
 
         if (!accessToken) {
           console.error('accessToken not found');
-          router.push('/login');
+          router.replace('/login');
           return;
         }
 
@@ -27,11 +27,11 @@ export default function SuccessPage() {
         });
 
         if (response.data) {
-          router.push('/');
+          router.replace('/');
         }
       } catch (error) {
-        console.error('Login error:', error);
-        router.push('/login');
+        console.error('Auth error:', error);
+        router.replace('/login');
       }
     }
 
