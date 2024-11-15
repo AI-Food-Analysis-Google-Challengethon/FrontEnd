@@ -6,9 +6,8 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const authorization = request.headers.get('authorization');
     
-    const response = await axios.post('http://34.64.162.227:8080/diets', formData, {
+    const response = await axios.post('https://foodeat.o-r.kr/diets', formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
         'Authorization': authorization,
       },
     });

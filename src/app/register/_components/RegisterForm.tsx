@@ -34,40 +34,40 @@ export default function RegisterForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  //   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-  //     const file = e.target.files?.[0];
-  //     if (file) {
-  //       setFormData((prev) => ({ ...prev, profileImage: file }));
-  //       setProfileImage(URL.createObjectURL(file));
-  //     }
-  //   };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/api/register', {
-        ...formData,
+      // 데이터 형식 변환
+      const requestData = {
+        nickname: formData.nickname,
         height: Number(formData.height),
         weight: Number(formData.weight),
         age: Number(formData.age),
-        // profileImage: profileImage,
-        prifileImage: defaultImage,
+        gender: formData.gender,
+        schoolName: formData.schoolName,
+        schoolCode: formData.schoolCode,
+      };
+
+      const res = await axios.post('/api/register', requestData, {
+        headers: {
+          Authorization: `Bearer ${session?.accessToken}`,
+        },
       });
 
-      if (response.data.status === 200) {
-        setInfo(
-          Number(formData.height),
-          Number(formData.weight),
-          Number(formData.age),
-          formData.gender,
-          formData.schoolName,
-          formData.schoolCode,
-          //   profileImage
-          defaultImage
-        );
-        alert('회원가입이 완료되었습니다!');
-      }
+      setInfo(
+        Number(formData.height),
+        Number(formData.weight),
+        Number(formData.age),
+        formData.gender,
+        formData.schoolName,
+        formData.schoolCode,
+        defaultImage
+      );
+
+      console.log('Register api 성공!', res.data);
+
+      alert('회원가입이 완료되었습니다!');
     } catch (error) {
       console.error('Error:', error);
       alert('회원가입 중 오류가 발생했습니다.');
@@ -78,13 +78,7 @@ export default function RegisterForm() {
     <form onSubmit={handleSubmit} className='space-y-6'>
       {/* 프로필 이미지 */}
       <div className='text-center'>
-        {/* <Image src={profileImage} alt='Profile' width={96} height={96} className='rounded-full mx-auto object-cover' /> */}
-        <input type='file' id='profileImage' className='hidden' accept='image/*' />
-        <button
-          type='button'
-          //   onClick={() => document.getElementById('profileImage')?.click()}
-          className='mt-2 px-4 py-2 text-sm bg-gray-500 text-white rounded'
-        >
+        <button type='button' className='mt-2 px-4 py-2 text-sm bg-gray-500 text-white rounded'>
           이미지 선택
         </button>
       </div>

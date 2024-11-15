@@ -1,6 +1,23 @@
-import NextAuth, { NextAuthConfig, Session } from "next-auth"
+import NextAuth, { DefaultSession, NextAuthConfig, Session } from "next-auth"
 import { JWT } from 'next-auth/jwt'
 import GoogleProvider from "next-auth/providers/google"
+
+// next-auth의 타입 확장
+declare module "next-auth" {
+  interface Session extends DefaultSession {
+    accessToken?: string;
+    nickname?: string;
+    email?: string;
+    profileImage?: string;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    accessToken?: string;
+  }
+}
+
 
 interface Account {
   access_token?: string;
