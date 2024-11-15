@@ -4,7 +4,6 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import NutritionChart from './NutritionChart';
-import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import NutritionDisplay from './NutritionDisplay';
 
@@ -37,13 +36,6 @@ const isMobile = () => {
 };
 
 export default function PhotoDisplay() {
-  const { data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      redirect('/api/auth/signin');
-    },
-  }) as { data: CustomSession | null; status: 'loading' | 'authenticated' | 'unauthenticated' };
-
   const { type, photoData } = useDietStore();
   const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
