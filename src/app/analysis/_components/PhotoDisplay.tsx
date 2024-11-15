@@ -29,7 +29,7 @@ const isMobile = () => {
 };
 
 export default function PhotoDisplay() {
-  const { type, photoData } = useDietStore();
+  const { type, photoData, setBreakfastKcal, setLunchKcal, setDinnerKcal } = useDietStore();
   const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -64,6 +64,14 @@ export default function PhotoDisplay() {
 
           if (res.status === 200) {
             setNutritionData(res.data.data);
+          }
+
+          if (type === '아침') {
+            setBreakfastKcal(res.data.data.totalKcal);
+          } else if (type === '점심') {
+            setLunchKcal(res.data.data.totalKcal);
+          } else if (type === '저녁') {
+            setDinnerKcal(res.data.data.totalKcal);
           }
         } catch (err) {
           if (axios.isAxiosError(err)) {

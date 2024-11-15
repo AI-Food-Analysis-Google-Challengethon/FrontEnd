@@ -10,7 +10,7 @@ interface DailyMealProps {
   calorie: number;
 }
 
-export default function DailyMealChart({ type, calorie }: DailyMealProps) {
+export default function DailyMealChart({ type, calorie = 0 }: DailyMealProps) {
   const { setType } = useDietStore();
 
   const handleLink = () => {
@@ -21,7 +21,7 @@ export default function DailyMealChart({ type, calorie }: DailyMealProps) {
     <section className='w-full flex justify-evenly items-center gap-4 mb-2 hover:scale-110 transform duration-200 shadow-sm'>
       <div className='flex flex-col items-center'>
         <h1 className='font-bold'>{type}</h1>
-        <CalorieBar current={calorie} max={2000} />
+        <CalorieBar current={calorie} max={3000} />
       </div>
       <Link href='/diet' onClick={handleLink} className='transform hover:scale-110'>
         <FaCameraRetro size={30} />

@@ -7,9 +7,6 @@ export async function POST(request: NextRequest) {
     const data = await request.json();
     const authorization = request.headers.get('authorization');
 
-    console.log('Received data:', data);
-    console.log('Authorization:', authorization);
-
     if (!data.nickname || !data.height || !data.weight || !data.age || !data.gender || !data.schoolName || !data.schoolCode) {
       return NextResponse.json(
         { message: '필수 필드가 누락되었습니다.' },
