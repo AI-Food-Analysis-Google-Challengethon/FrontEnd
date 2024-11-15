@@ -32,12 +32,12 @@ export default function SuccessPage() {
           console.log('응답 정보 테스트', res.data);
           setAuth(res.data.name, res.data.email, res.data.profileImage);
           setInfo(
-            res.data.height,
-            res.data.weight,
-            res.data.age,
-            res.data.gender,
-            res.data.schoolName,
-            res.data.schoolCode
+            res.data.data.height,
+            res.data.data.weight,
+            res.data.data.age,
+            res.data.data.gender,
+            res.data.data.schoolName,
+            res.data.data.schoolCode
           );
 
           router.replace('/');
