@@ -29,6 +29,7 @@ export default function SuccessPage() {
         });
 
         if (res) {
+          console.log('응답 정보 테스트', res.data);
           setAuth(res.data.name, res.data.email, res.data.profileImage);
           setInfo(
             res.data.height,
