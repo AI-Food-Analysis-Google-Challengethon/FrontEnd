@@ -29,14 +29,12 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* <MSWComponent> */}
         <SessionProvider>
           <AuthProvider>
             <Navbar />
             {children}
           </AuthProvider>
         </SessionProvider>
-        {/* </MSWComponent> */}
       </body>
     </html>
   );
