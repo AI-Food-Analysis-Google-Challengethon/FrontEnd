@@ -31,7 +31,7 @@ const NutritionForm = () => {
         const accessToken = localStorage.getItem('accessToken');
         const response = await axios.get('/api/school', {
           headers: {
-            Authorization: accessToken,
+            Authorization: `Bearer ${accessToken}`,
           },
         });
         setNutritionData(response.data);
