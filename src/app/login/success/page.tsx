@@ -20,7 +20,7 @@ export default function SuccessPage() {
 
         localStorage.setItem('accessToken', accessToken);
 
-        const response = await axios.post('/api/login', null, {
+        const response = await axios.get('/api/login', {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
