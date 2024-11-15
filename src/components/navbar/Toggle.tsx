@@ -20,6 +20,8 @@ export default function Toggle() {
     setOpenToggle(!openToggle);
   };
 
+  console.log(name, profilePic);
+
   return (
     <div className='relative z-50 flex mt-[15px] lg:mt-0 items-center '>
       {name && (
