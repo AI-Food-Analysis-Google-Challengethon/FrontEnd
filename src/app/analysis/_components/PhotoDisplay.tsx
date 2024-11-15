@@ -154,9 +154,10 @@ export default function PhotoDisplay() {
             carbsCalories={nutritionData.carbs * 4}
             proteinCalories={nutritionData.protein * 4}
             fatCalories={nutritionData.fat * 9}
-            etcCalories={
+            etcCalories={Math.max(
+              0,
               nutritionData.totalKcal - nutritionData.carbs * 4 - nutritionData.protein * 4 - nutritionData.fat * 9
-            }
+            )} // Math.max를 사용하여 음수가 나오지 않도록 함
           />
         )}
       </main>
