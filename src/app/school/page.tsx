@@ -9,7 +9,7 @@ export default function SchoolPage({
 }) {
   return (
     <div className='max-w-4xl mx-auto p-6'>
-      return <NutritionForm initialDate={date} />
+      <NutritionForm initialDate={date} />
     </div>
   );
 }
