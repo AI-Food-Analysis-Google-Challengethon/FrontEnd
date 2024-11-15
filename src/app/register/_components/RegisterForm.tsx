@@ -2,7 +2,6 @@
 
 import { useState, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
 import { useAuthStore } from '@/store/useAuthStore';
 
 interface FormData {
@@ -16,8 +15,6 @@ interface FormData {
 }
 
 export default function RegisterForm() {
-  const { data: session } = useSession();
-  const defaultImage = session?.user?.image || '';
   const [formData, setFormData] = useState<FormData>({
     nickname: '',
     height: '',
