@@ -4,7 +4,6 @@ import './globals.css';
 import Navbar from '@/components/navbar/Navbar';
 import { SessionProvider } from 'next-auth/react';
 import AuthProvider from '@/components/auth/AuthProvider';
-import { MSWComponent } from '@/components/MSWComponent';
 
 const geistSans = localFont({
   src: '../../public/fonts/GeistVF.woff',
