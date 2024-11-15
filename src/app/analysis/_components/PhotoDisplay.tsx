@@ -62,6 +62,8 @@ export default function PhotoDisplay() {
             },
           });
 
+          console.log('음식 분석 결과 잘나옴??!!!!', res);
+
           if (res.status === 200) {
             setNutritionData(res.data.data);
           }
