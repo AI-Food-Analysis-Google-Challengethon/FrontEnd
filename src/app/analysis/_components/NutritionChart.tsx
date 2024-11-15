@@ -1,10 +1,10 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, ComposedChart, RectangleProps } from 'recharts';
 
 interface NutritionChartProps {
-  carbsCalories: number;
-  proteinCalories: number;
-  fatCalories: number;
-  etcCalories?: number;
+  totalKcal: number;
+  carbs: number;
+  protein: number;
+  fat: number;
 }
 
 interface CustomBarProps extends RectangleProps {
@@ -33,44 +33,32 @@ interface ChartData {
   color: string;
 }
 
-const NutritionChart = ({ carbsCalories, proteinCalories, fatCalories, etcCalories }: NutritionChartProps) => {
-  const totalCalories = carbsCalories + proteinCalories + fatCalories + (etcCalories || 0);
-
+const NutritionChart = ({ totalKcal, carbs, protein, fat }: NutritionChartProps) => {
   const totalData = [
     {
       name: '총 섭취',
-      carbs: carbsCalories,
-      protein: proteinCalories,
-      fat: fatCalories,
-      etc: etcCalories || 0,
+      carbs: carbs,
+      protein: protein,
+      fat: fat,
     },
   ];
 
   const data: ChartData[] = [
     {
       name: '탄수화물',
-      value: carbsCalories,
+      value: carbs,
       color: '#FF7B7B',
     },
     {
       name: '단백질',
-      value: proteinCalories,
+      value: protein,
       color: '#82D4BB',
     },
     {
       name: '지방',
-      value: fatCalories,
+      value: fat,
       color: '#FFE27B',
     },
-    ...(etcCalories
-      ? [
-          {
-            name: '기타',
-            value: etcCalories,
-            color: '#A4A4A4',
-          },
-        ]
-      : []),
   ];
 
   const CustomBar = (props: CustomBarProps) => {
@@ -89,7 +77,7 @@ const NutritionChart = ({ carbsCalories, proteinCalories, fatCalories, etcCalori
     if (active && payload && payload.length) {
       return (
         <div className='bg-white p-2 rounded-lg shadow-md border border-gray-100'>
-          <p className='text-sm'>{`${payload[0].value}kcal`}</p>
+          <p className='text-sm'>{`${payload[0].value}g`}</p>
         </div>
       );
     }
@@ -100,7 +88,7 @@ const NutritionChart = ({ carbsCalories, proteinCalories, fatCalories, etcCalori
     <div className='w-[400px] md:w-[800px] bg-white rounded-xl p-4 shadow-sm'>
       <div className='flex justify-between items-center mb-4'>
         <div className='text-lg font-medium'>총 섭취</div>
-        <div className='text-lg font-bold'>{totalCalories}karl</div>
+        <div className='text-lg font-bold'>{totalKcal}kcal</div>
       </div>
 
       <div className='h-[40px] mb-6'>
@@ -137,18 +125,8 @@ const NutritionChart = ({ carbsCalories, proteinCalories, fatCalories, etcCalori
               isAnimationActive={true}
               animationDuration={1000}
               animationBegin={400}
+              radius={[0, 4, 4, 0]}
             />
-            {etcCalories ? (
-              <Bar
-                dataKey='etc'
-                stackId='a'
-                fill='#A4A4A4'
-                isAnimationActive={true}
-                animationDuration={1000}
-                animationBegin={600}
-                radius={[0, 4, 4, 0]}
-              />
-            ) : null}
           </ComposedChart>
         </ResponsiveContainer>
       </div>
@@ -160,11 +138,7 @@ const NutritionChart = ({ carbsCalories, proteinCalories, fatCalories, etcCalori
             <div className='h-[20px]'>
               <ResponsiveContainer width='100%' height='100%'>
                 <BarChart data={[item]} layout='vertical' barSize={20}>
-                  <XAxis
-                    type='number'
-                    hide
-                    domain={[0, Math.max(carbsCalories, proteinCalories, fatCalories, etcCalories || 0)]}
-                  />
+                  <XAxis type='number' hide domain={[0, Math.max(carbs, protein, fat)]} />
                   <YAxis type='category' hide />
                   <Tooltip
                     position={{ y: -30 }}

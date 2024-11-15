@@ -151,13 +151,10 @@ export default function PhotoDisplay() {
       <main className='mt-8 mb-[100px]'>
         {nutritionData && (
           <NutritionChart
-            carbsCalories={nutritionData.carbs * 4}
-            proteinCalories={nutritionData.protein * 4}
-            fatCalories={nutritionData.fat * 9}
-            etcCalories={Math.max(
-              0,
-              nutritionData.totalKcal - nutritionData.carbs * 4 - nutritionData.protein * 4 - nutritionData.fat * 9
-            )} // Math.max를 사용하여 음수가 나오지 않도록 함
+            totalKcal={nutritionData.totalKcal}
+            carbs={nutritionData.carbs}
+            protein={nutritionData.protein}
+            fat={nutritionData.fat}
           />
         )}
       </main>
