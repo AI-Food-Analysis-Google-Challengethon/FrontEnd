@@ -14,6 +14,8 @@ export default function Toggle() {
   const { name, profileImage } = useAuthStore();
   const profilePic = profileImage || '';
 
+  const accessToken = localStorage.getItem('accessToken');
+
   const today = new Date().toISOString().split('T')[0].replace(/-/g, '');
 
   const handleToggle = () => {
@@ -24,7 +26,7 @@ export default function Toggle() {
 
   return (
     <div className='relative z-50 flex mt-[15px] lg:mt-0 items-center '>
-      {name && (
+      {accessToken && (
         <div className='flex items-center mr-[5px] lg:mr-[20px]'>
           <span className='text-[12px] lg:text-[15px] font-semibold mr-[10px]'>{name} 님</span>
           <Image src={profilePic} alt='profile' width={28} height={28} className='rounded-full' />
@@ -49,7 +51,7 @@ export default function Toggle() {
         </Link>
 
         <>
-          {name ? (
+          {accessToken ? (
             <>
               <Link href='register' className={linkForPageClassName}>
                 Register
