@@ -69,6 +69,8 @@ export default function PhotoDisplay() {
             },
           });
 
+          console.log('사진은 통과!!', imageUploadRes);
+
           // 분석 요청 준비
           const today = new Date();
           const dateString =
@@ -76,18 +78,20 @@ export default function PhotoDisplay() {
             String(today.getMonth() + 1).padStart(2, '0') +
             String(today.getDate()).padStart(2, '0');
 
-          const dietsFormData = new FormData();
-          dietsFormData.append('imageUrl', imageUploadRes.data.imageUrl);
-          dietsFormData.append('type', typeMapping[type]);
-          dietsFormData.append('date', dateString);
+          const analysisData = {
+            type: typeMapping[type],
+            date: dateString,
+            imageUrl: imageUploadRes.data.imageUrl,
+          };
 
           // 분석 요청
-          const analysisRes = await axios.post<AnalysisResponse>('/api/diets', dietsFormData, {
+          const analysisRes = await axios.post('/api/diets', analysisData, {
             headers: {
-              'Content-Type': 'multipart/form-data',
               Authorization: `Bearer ${accessToken}`,
             },
           });
+
+          console.log('2번쨰 최종 분석은 통과!!', analysisRes);
 
           if (analysisRes.status === 200) {
             setNutritionData(analysisRes.data.data);
