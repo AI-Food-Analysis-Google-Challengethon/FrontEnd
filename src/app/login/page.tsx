@@ -1,4 +1,4 @@
-import GoogleAuth from '@/components/auth/GoogleAuth';
+import GoogleLoginButton from '@/components/auth/GoogleLoginButton';
 import SessionGuard from '@/components/auth/SessionGuard';
 
 export default function LoginPage() {
@@ -6,7 +6,7 @@ export default function LoginPage() {
     <SessionGuard>
       <div className='w-full min-h-screen flex flex-col items-center mt-[200px]'>
         <main>
-          <GoogleAuth />
+          <GoogleLoginButton />
         </main>
       </div>
     </SessionGuard>

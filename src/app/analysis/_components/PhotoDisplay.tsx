@@ -53,19 +53,23 @@ export default function PhotoDisplay() {
   useEffect(() => {
     setIsMounted(true);
 
-    if (photoData && type && session?.accessToken) {
+    if (photoData && type) {
       const analyzePhoto = async () => {
         setIsLoading(true);
         setError(null);
 
         try {
+          const accessToken = localStorage.getItem('accessToken');
+          if (!accessToken) {
+            throw new Error('인증 토큰이 없습니다.');
+          }
+
           const response = await fetch(photoData);
           const blob = await response.blob();
 
           const formData = new FormData();
           formData.append('image', blob, 'photo.jpg');
 
-          // request 객체를 JSON 문자열로 변환하여 추가
           const requestData = {
             type: type,
             date: new Date().toISOString().slice(0, 10).replace(/-/g, ''),
@@ -75,17 +79,15 @@ export default function PhotoDisplay() {
           const res = await axios.post<AnalysisResponse>('/api/diets', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
-              Authorization: `Bearer ${session.accessToken}`,
+              Authorization: `Bearer ${accessToken}`,
             },
           });
 
-          console.log('테스트 결과', res);
           if (res.status === 200) {
             setNutritionData(res.data.data);
           }
         } catch (err) {
           if (axios.isAxiosError(err)) {
-            console.error(err.message);
             if (err.response?.status === 401) {
               redirect('/api/auth/signin');
             }
@@ -98,7 +100,7 @@ export default function PhotoDisplay() {
 
       analyzePhoto();
     }
-  }, [photoData, type, session]);
+  }, [photoData, type]);
 
   if (!isMounted || isLoading) {
     return (

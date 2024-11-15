@@ -38,7 +38,11 @@ export default function RegisterForm() {
     e.preventDefault();
 
     try {
-      // 데이터 형식 변환
+      const accessToken = localStorage.getItem('accessToken');
+      if (!accessToken) {
+        throw new Error('인증 토큰이 없습니다.');
+      }
+
       const requestData = {
         nickname: formData.nickname,
         height: Number(formData.height),
@@ -51,7 +55,7 @@ export default function RegisterForm() {
 
       const res = await axios.post('/api/register', requestData, {
         headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
 
@@ -66,7 +70,6 @@ export default function RegisterForm() {
       );
 
       console.log('Register api 성공!', res.data);
-
       alert('회원가입이 완료되었습니다!');
     } catch (error) {
       console.error('Error:', error);
