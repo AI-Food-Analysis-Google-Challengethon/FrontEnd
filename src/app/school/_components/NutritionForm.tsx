@@ -29,6 +29,7 @@ const NutritionForm = () => {
     const fetchData = async () => {
       try {
         const accessToken = localStorage.getItem('accessToken');
+        console.log('school 에서 엑세스 토큰 !!', accessToken);
         const response = await axios.get('/api/school', {
           headers: {
             Authorization: `Bearer ${accessToken}`,
