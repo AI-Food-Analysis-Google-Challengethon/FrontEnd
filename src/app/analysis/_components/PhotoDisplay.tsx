@@ -81,7 +81,7 @@ export default function PhotoDisplay() {
           const analysisData = {
             type: typeMapping[type],
             date: dateString,
-            imageUrl: imageUploadRes.data.imageUrl,
+            imageUrl: imageUploadRes.data,
           };
 
           // 분석 요청
