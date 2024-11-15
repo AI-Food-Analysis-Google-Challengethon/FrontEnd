@@ -55,12 +55,6 @@ export default function PhotoDisplay() {
           const formData = new FormData();
           formData.append('image', blob, 'photo.jpg');
 
-          const requestData = {
-            type: type,
-            date: new Date().toISOString().slice(0, 10).replace(/-/g, ''),
-          };
-          formData.append('request', JSON.stringify(requestData));
-
           const res = await axios.post<AnalysisResponse>('/api/diets', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',

@@ -6,9 +6,27 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const authorization = request.headers.get('authorization');
     
-    const response = await axios.post('https://foodeat.o-r.kr/diets', formData, {
+    // Extract image and request data
+    const image = formData.get('image');
+    const requestJSON = formData.get('request');
+    
+    if (!image || !requestJSON) {
+      return NextResponse.json(
+        { message: '이미지와 요청 데이터가 필요합니다.' },
+        { status: 400 }
+      );
+    }
+
+    // Create new FormData for the backend
+    const backendFormData = new FormData();
+    backendFormData.append('image', image);
+    backendFormData.append('type', JSON.parse(requestJSON as string).type);
+    backendFormData.append('date', JSON.parse(requestJSON as string).date);
+
+    const response = await axios.post('https://foodeat.o-r.kr/diets', backendFormData, {
       headers: {
         'Authorization': authorization,
+        'Content-Type': 'multipart/form-data',
       },
     });
 
