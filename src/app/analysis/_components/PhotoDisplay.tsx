@@ -21,11 +21,18 @@ interface AnalysisResponse {
     vitaminB: number;
     vitaminC: number;
     date: string;
+    type: string;
   };
 }
 
 const isMobile = () => {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+
+const typeMapping: { [key: string]: string } = {
+  아침: 'BREAKFAST',
+  점심: 'LUNCH',
+  저녁: 'DINNER',
 };
 
 export default function PhotoDisplay() {
@@ -49,31 +56,51 @@ export default function PhotoDisplay() {
             throw new Error('인증 토큰이 없습니다.');
           }
 
+          // First, upload the image to get the URL
           const response = await fetch(photoData);
           const blob = await response.blob();
-
           const formData = new FormData();
           formData.append('image', blob, 'photo.jpg');
 
-          const res = await axios.post<AnalysisResponse>('/api/diets', formData, {
+          const imageUploadRes = await axios.post('https://foodeat.o-r.kr/storage/images', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
               Authorization: `Bearer ${accessToken}`,
             },
           });
 
-          console.log('음식 분석 결과 잘나옴??!!!!', res);
+          // Prepare the analysis request with the received image URL
+          const today = new Date();
+          const dateString =
+            today.getFullYear() +
+            String(today.getMonth() + 1).padStart(2, '0') +
+            String(today.getDate()).padStart(2, '0');
 
-          if (res.status === 200) {
-            setNutritionData(res.data.data);
-          }
+          const analysisData = {
+            type: typeMapping[type],
+            date: dateString,
+            imageUrl: imageUploadRes.data.imageUrl, // Assuming this is the response format
+          };
 
-          if (type === '아침') {
-            setBreakfastKcal(res.data.data.totalKcal);
-          } else if (type === '점심') {
-            setLunchKcal(res.data.data.totalKcal);
-          } else if (type === '저녁') {
-            setDinnerKcal(res.data.data.totalKcal);
+          // Send the analysis request
+          const analysisRes = await axios.post<AnalysisResponse>('https://foodeat.o-r.kr/diets', analysisData, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+
+          if (analysisRes.status === 200) {
+            setNutritionData(analysisRes.data.data);
+
+            // Update the appropriate meal calorie count
+            if (type === '아침') {
+              setBreakfastKcal(analysisRes.data.data.totalKcal);
+            } else if (type === '점심') {
+              setLunchKcal(analysisRes.data.data.totalKcal);
+            } else if (type === '저녁') {
+              setDinnerKcal(analysisRes.data.data.totalKcal);
+            }
           }
         } catch (err) {
           if (axios.isAxiosError(err)) {
