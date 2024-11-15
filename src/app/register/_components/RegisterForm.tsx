@@ -56,6 +56,17 @@ export default function RegisterForm() {
         },
       });
 
+      if (res) {
+        setInfo(
+          res.data.data.height,
+          res.data.data.weight,
+          res.data.data.age,
+          res.data.data.gender,
+          res.data.data.schoolName,
+          res.data.data.schoolCode
+        );
+      }
+
       setInfo(
         Number(formData.height),
         Number(formData.weight),

@@ -35,12 +35,7 @@ export async function POST(request: NextRequest) {
       }
     );
 
-    // 응답 데이터 자세히 로깅
-    console.log('Full response:', response);
-    console.log('Response status:', response.status);
-    console.log('Response data:', response.data);
 
-    // Postman 응답 형식과 동일하게 맞춤
     return NextResponse.json({
       status: response.status,
       data: response.data

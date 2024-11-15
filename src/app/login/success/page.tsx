@@ -31,14 +31,6 @@ export default function SuccessPage() {
         if (res) {
           console.log('응답 정보 테스트', res.data);
           setAuth(res.data.data.name, res.data.data.email, res.data.data.profileImage);
-          setInfo(
-            res.data.data.height,
-            res.data.data.weight,
-            res.data.data.age,
-            res.data.data.gender,
-            res.data.data.schoolName,
-            res.data.data.schoolCode
-          );
 
           router.replace('/');
         }
