@@ -1,7 +1,7 @@
 'use client';
 import { useAuthStore } from '@/store/useAuthStore';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import SignOutButton from '../SignOutButton';
 import Image from 'next/image';
@@ -13,8 +13,11 @@ export default function Toggle() {
   const [openToggle, setOpenToggle] = useState(false);
   const { name, profileImage } = useAuthStore();
   const profilePic = profileImage || '';
+  const [accessToken, setAccessToken] = useState<string | null>(null);
 
-  const accessToken = localStorage.getItem('accessToken');
+  useEffect(() => {
+    setAccessToken(localStorage.getItem('accessToken'));
+  }, []);
 
   const today = new Date().toISOString().split('T')[0].replace(/-/g, '');
 
