@@ -12,7 +12,7 @@ interface AuthStore {
     gender: string | null;
     schoolName: string | null;
     schoolCode: string | null;
-    setInfo: (height: number, weight: number, age: number, gender: string, schoolName: string, schoolCode:string, profileImage: string) => void;
+    setInfo: (height: number, weight: number, age: number, gender: string, schoolName: string, schoolCode:string) => void;
     setAuth: (name:string, email:string, profileImage:string) => void;
     clearAuth: () => void;
 }
@@ -29,7 +29,7 @@ export const useAuthStore = create<AuthStore>()(
         gender: null,
         schoolName: null,
         schoolCode: null,
-        setInfo: (height, weight, age, gender, schoolName, schoolCode, profileImage) => set({height, weight, age, gender, schoolName, schoolCode, profileImage}),
+        setInfo: (height, weight, age, gender, schoolName, schoolCode) => set({height, weight, age, gender, schoolName, schoolCode}),
         setAuth: (name, email , profileImage) => set({ name, email, profileImage}),
         clearAuth: () => set({ name: null, email:null, profileImage: null})
       }),

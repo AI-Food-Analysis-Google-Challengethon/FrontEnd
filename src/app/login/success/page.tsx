@@ -1,4 +1,5 @@
 'use client';
+import { useAuthStore } from '@/store/useAuthStore';
 import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
@@ -6,6 +7,7 @@ import { useEffect } from 'react';
 export default function SuccessPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { setAuth, setInfo } = useAuthStore();
 
   useEffect(() => {
     async function handleAuth() {
@@ -20,13 +22,27 @@ export default function SuccessPage() {
 
         localStorage.setItem('accessToken', accessToken);
 
-        const response = await axios.get('/api/login', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const res = await axios.post(
+          '/api/login',
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
 
-        if (response.data) {
+        if (res) {
+          setAuth(res.data.name, res.data.email, res.data.profileImage);
+          setInfo(
+            res.data.height,
+            res.data.weight,
+            res.data.age,
+            res.data.gender,
+            res.data.schoolName,
+            res.data.schoolCode
+          );
+
           router.replace('/');
         }
       } catch (error) {

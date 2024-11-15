@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
     const authorization = request.headers.get('authorization');
     
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const response = await axios.get(
+    const response = await axios.post(
       'https://foodeat.o-r.kr/members/me',
       {
         headers: {
