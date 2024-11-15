@@ -7,13 +7,6 @@ import NutritionChart from './NutritionChart';
 import { redirect } from 'next/navigation';
 import NutritionDisplay from './NutritionDisplay';
 
-interface CustomSession {
-  accessToken?: string;
-  nickname?: string;
-  email?: string;
-  expires: string;
-}
-
 interface AnalysisResponse {
   status: number;
   data: {
