@@ -56,36 +56,35 @@ export default function PhotoDisplay() {
             throw new Error('인증 토큰이 없습니다.');
           }
 
-          // First, upload the image to get the URL
+          // 이미지 업로드
           const response = await fetch(photoData);
           const blob = await response.blob();
           const formData = new FormData();
           formData.append('image', blob, 'photo.jpg');
 
-          const imageUploadRes = await axios.post('https://foodeat.o-r.kr/storage/images', formData, {
+          const imageUploadRes = await axios.post('/api/image', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
               Authorization: `Bearer ${accessToken}`,
             },
           });
 
-          // Prepare the analysis request with the received image URL
+          // 분석 요청 준비
           const today = new Date();
           const dateString =
             today.getFullYear() +
             String(today.getMonth() + 1).padStart(2, '0') +
             String(today.getDate()).padStart(2, '0');
 
-          const analysisData = {
-            type: typeMapping[type],
-            date: dateString,
-            imageUrl: imageUploadRes.data.imageUrl, // Assuming this is the response format
-          };
+          const dietsFormData = new FormData();
+          dietsFormData.append('imageUrl', imageUploadRes.data.imageUrl);
+          dietsFormData.append('type', typeMapping[type]);
+          dietsFormData.append('date', dateString);
 
-          // Send the analysis request
-          const analysisRes = await axios.post<AnalysisResponse>('https://foodeat.o-r.kr/diets', analysisData, {
+          // 분석 요청
+          const analysisRes = await axios.post<AnalysisResponse>('/api/diets', dietsFormData, {
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'multipart/form-data',
               Authorization: `Bearer ${accessToken}`,
             },
           });
@@ -93,7 +92,7 @@ export default function PhotoDisplay() {
           if (analysisRes.status === 200) {
             setNutritionData(analysisRes.data.data);
 
-            // Update the appropriate meal calorie count
+            // 칼로리 업데이트
             if (type === '아침') {
               setBreakfastKcal(analysisRes.data.data.totalKcal);
             } else if (type === '점심') {
@@ -116,7 +115,7 @@ export default function PhotoDisplay() {
 
       analyzePhoto();
     }
-  }, [photoData, type]);
+  }, [photoData, type, setBreakfastKcal, setLunchKcal, setDinnerKcal]);
 
   if (!isMounted || isLoading) {
     return (
