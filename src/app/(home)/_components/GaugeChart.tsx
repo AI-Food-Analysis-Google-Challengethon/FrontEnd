@@ -17,10 +17,6 @@ const GaugeChart = () => {
     const fetchDailyData = async () => {
       try {
         const storageToken = localStorage.getItem('accessToken');
-        if (!storageToken) {
-          redirect('/api/auth/signin');
-          return;
-        }
 
         const response = await axios.get('/api/daily', {
           headers: {
@@ -28,10 +24,11 @@ const GaugeChart = () => {
           },
         });
 
-        if (response.data?.data) {
+        console.log('콘솔!!!!', response);
+
+        if (response.data.data) {
           setScore(response.data.data.score);
           setAdvice(response.data.data.advice);
-          // Format date from YYYYMMDD to YYYY.MM.DD
           const rawDate = response.data.data.date;
           const formattedDate = `${rawDate.slice(0, 4)}.${rawDate.slice(4, 6)}.${rawDate.slice(6, 8)}`;
           setDate(formattedDate);
