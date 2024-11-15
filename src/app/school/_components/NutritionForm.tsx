@@ -4,6 +4,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { FaUtensils, FaCalendar, FaChartBar } from 'react-icons/fa';
 import NutritionCard from './NutritionCard';
+import { useSearchParams } from 'next/navigation';
 
 export type MealType = 'BREAKFAST' | 'LUNCH' | 'DINNER';
 export interface VitaminData {
@@ -22,11 +23,14 @@ export interface NutritionData {
   cholesterol: number;
 }
 
-const NutritionForm = ({ initialDate }: { initialDate: string }) => {
-  const [date, setDate] = useState<string>(initialDate);
+const NutritionForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [nutritionData, setNutritionData] = useState<NutritionData | null>(null);
   const [error, setError] = useState<string>('');
+
+  const searchParam = useSearchParams();
+  const initialDate = searchParam.get('date') ?? '';
+  const [date, setDate] = useState<string>(initialDate);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
