@@ -22,15 +22,11 @@ export default function SuccessPage() {
 
         localStorage.setItem('accessToken', accessToken);
 
-        const res = await axios.post(
-          '/api/login',
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        const res = await axios.get('/api/login', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
 
         if (res) {
           setAuth(res.data.name, res.data.email, res.data.profileImage);
