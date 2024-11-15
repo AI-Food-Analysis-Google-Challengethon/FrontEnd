@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 
-const GaugeChart = ({ value = 60, min = 0, max = 100 }) => {
+const GaugeChart = ({ value = 70, min = 0, max = 100 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
