@@ -1,16 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 
-interface SignUpRequest {
-  nickname: string;
-  height: number;
-  weight: number;
-  age: number;
-  gender: 'MALE' | 'FEMALE';
-  schoolName: string;
-  schoolCode: string;
-}
-
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
