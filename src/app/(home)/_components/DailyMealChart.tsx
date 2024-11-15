@@ -1,27 +1,31 @@
 'use client';
+import CalorieBar from '@/components/chart/CalorieBar';
+import { useDietStore } from '@/store/useDietStore';
+import Link from 'next/link';
+import React from 'react';
+import { FaCameraRetro } from 'react-icons/fa';
 
-interface DailyMealChartProps {
+interface DailyMealProps {
   type: string;
-  calorie: number | null;
+  calorie: number;
 }
 
-export default function DailyMealChart({ type, calorie }: DailyMealChartProps) {
-  const width = calorie ? Math.min((calorie / 3000) * 100, 100) : 0;
+export default function DailyMealChart({ type, calorie = 0 }: DailyMealProps) {
+  const { setType } = useDietStore();
+
+  const handleLink = () => {
+    setType(type);
+  };
 
   return (
-    <div className='flex flex-row w-[320px] lg:w-[600px] my-[2px] gap-[30px]'>
-      <div>
-        <p className='text-xl font-bold text-black'>{type}</p>
-        <p className='text-sm font-normal text-neutral-500'>{calorie ? `${calorie}kcal` : '식사 전'}</p>
+    <section className='w-full flex justify-evenly items-center gap-4 mb-2 hover:scale-110 transform duration-200 shadow-sm'>
+      <div className='flex flex-col items-center'>
+        <h1 className='font-bold'>{type}</h1>
+        <CalorieBar current={calorie} max={3000} />
       </div>
-      <div className='flex items-center flex-1'>
-        <div className='w-full bg-gray-200 rounded-full h-4'>
-          <div
-            className='bg-blue-400 h-4 rounded-full transition-all duration-500 ease-out'
-            style={{ width: `${width}%` }}
-          />
-        </div>
-      </div>
-    </div>
+      <Link href='/diet' onClick={handleLink} className='transform hover:scale-110'>
+        <FaCameraRetro size={30} />
+      </Link>
+    </section>
   );
 }
