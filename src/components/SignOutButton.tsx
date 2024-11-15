@@ -1,14 +1,17 @@
 'use client';
 
 import React from 'react';
-import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/useAuthStore';
 
 const SignOutButton = () => {
+  const { clearAuth } = useAuthStore();
   const router = useRouter();
 
   const handleSignOut = async () => {
-    await signOut({ redirect: false });
+    localStorage.removeItem('accessToken');
+    clearAuth();
+
     router.push('/login');
   };
 
