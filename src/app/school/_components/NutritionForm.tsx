@@ -29,8 +29,8 @@ const NutritionForm = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('/api/school');
-        setNutritionData(response.data.data);
-        console.log('영양####@@@@@', nutritionData);
+        setNutritionData(response.data);
+        console.log('영양####@@@@@', response.data);
       } catch (err) {
         setError('데이터를 불러오는데 실패했습니다.');
         console.error('Error fetching nutrition data:', err);
