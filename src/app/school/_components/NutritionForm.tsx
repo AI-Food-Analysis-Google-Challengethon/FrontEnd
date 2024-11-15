@@ -30,6 +30,7 @@ const NutritionForm = () => {
       try {
         const response = await axios.get('/api/school');
         setNutritionData(response.data.data);
+        console.log('영양####@@@@@', nutritionData);
       } catch (err) {
         setError('데이터를 불러오는데 실패했습니다.');
         console.error('Error fetching nutrition data:', err);
@@ -51,6 +52,8 @@ const NutritionForm = () => {
   if (!nutritionData) return null;
 
   const formattedDate = nutritionData.date.replace(/(\d{4})(\d{2})(\d{2})/, '$1년 $2월 $3일');
+
+  console.log('영양####@@@@@22222222222', nutritionData);
 
   return (
     <div className='bg-white rounded-xl shadow-lg p-6 mb-6 transition-all duration-300 hover:shadow-xl'>
