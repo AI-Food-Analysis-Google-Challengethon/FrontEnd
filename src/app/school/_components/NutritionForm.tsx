@@ -21,15 +21,9 @@ export interface NutritionData {
   natrium: number;
   cholesterol: number;
 }
-export interface ApiResponse {
-  status: number;
-  msg: string;
-  data: NutritionData;
-}
 
-const NutritionForm = () => {
-  const [date, setDate] = useState<string>('');
-  const [mealType, setMealType] = useState<MealType | ''>('');
+const NutritionForm = ({ initialDate }: { initialDate: string }) => {
+  const [date, setDate] = useState<string>(initialDate);
   const [loading, setLoading] = useState<boolean>(false);
   const [nutritionData, setNutritionData] = useState<NutritionData | null>(null);
   const [error, setError] = useState<string>('');
@@ -40,10 +34,7 @@ const NutritionForm = () => {
       setLoading(true);
       setError('');
 
-      const response = await axios.post<ApiResponse>('http://localhost:8080/api/school-food-analysis', {
-        type: mealType,
-        date: date.replace(/-/g, ''),
-      });
+      const response = await axios.get(`/api/school?date=${date}`);
 
       setNutritionData(response.data.data);
     } catch (err) {
@@ -76,22 +67,6 @@ const NutritionForm = () => {
               required
             />
           </div>
-
-          <div className='flex-1 min-w-[200px]'>
-            <label className='block text-sm font-medium mb-1'>식사 구분</label>
-            <select
-              value={mealType}
-              onChange={(e) => setMealType(e.target.value as MealType)}
-              className='w-full px-3 py-2 border rounded-md'
-              required
-            >
-              <option value=''>선택해주세요</option>
-              <option value='BREAKFAST'>아침</option>
-              <option value='LUNCH'>점심</option>
-              <option value='DINNER'>저녁</option>
-            </select>
-          </div>
-
           <div className='flex-1 min-w-[200px] flex items-end'>
             <button
               type='submit'

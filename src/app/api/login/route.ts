@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     }
 
     const response = await axios.post(
-      'https://foodeat.o-r.kr/member/me',
+      'https://foodeat.o-r.kr/members/me',
       {},
       {
         headers: {
