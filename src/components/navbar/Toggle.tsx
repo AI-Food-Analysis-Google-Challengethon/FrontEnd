@@ -19,13 +19,9 @@ export default function Toggle() {
     setAccessToken(localStorage.getItem('accessToken'));
   }, []);
 
-  const today = new Date().toISOString().split('T')[0].replace(/-/g, '');
-
   const handleToggle = () => {
     setOpenToggle(!openToggle);
   };
-
-  console.log(name, profilePic);
 
   return (
     <div className='relative z-50 flex mt-[15px] lg:mt-0 items-center '>
@@ -43,7 +39,7 @@ export default function Toggle() {
           openToggle ? 'max-h-[500px] py-2 opacity-100' : 'max-h-0 opacity-0'
         } transition-all duration-300 ease-in-out overflow-hidden absolute top-9 right-1 w-[150px] border-2 border-blue-300 bg-blue-50 shadow-lg rounded-2xl flex flex-col items-center gap-3 px-2`}
       >
-        <Link href={`school?date=${today}`} className={linkForPageClassName}>
+        <Link href={`school`} className={linkForPageClassName}>
           School Page
         </Link>
         <Link href='calendar' className={linkForPageClassName}>

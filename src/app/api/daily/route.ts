@@ -1,17 +1,25 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const authorization = request.headers.get('authorization');
+    
+    if (!authorization) {
+      return NextResponse.json(
+        { message: '인증 토큰이 없습니다.' },
+        { status: 401 }
+      );
+    }
+
     const date = new Date().toISOString().split('T')[0].replace(/-/g, '');
 
-
     const response = await axios.get(
-      `https://foodeat.o-r.kr/diets/school?date=${date}`,
+      `https://foodeat.o-r.kr/diets/daily?date=${date}`,
       {
         headers: {
-          Authorization: `Bearer ${process.env.API_TOKEN}`
-        }
+          Authorization: authorization,
+        },
       }
     );
 
